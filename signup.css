@@ -36,17 +36,6 @@ body {
     box-sizing: border-box;
 }
 
-#submit-button {
-    height: 45px;
-    width: 300px;
-    border-radius: 22.5px;
-    border: none;
-    background-color: rgb(113, 90, 232);
-    box-sizing: border-box;
-    font-size: 1.1em;
-    color: #ffffff;
-}
-
 .right-align {
     display: flex;
     align-items: center;
@@ -80,4 +69,21 @@ h1 {
     font-size: 60px;
     color: #444444;
     font-family: 'Lato', sans-serif;
+}
+
+#submit-button {
+    height: 45px;
+    width: 300px;
+    border-radius: 22.5px;
+    border: none;
+    background-color: rgb(113, 90, 232);
+    box-sizing: border-box;
+    font-size: 1.1em;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+#submit-button:hover {
+    background-color: rgba(113, 90, 232, 0.6);
+    transition-duration: 700ms;
 }
