@@ -1,0 +1,31 @@
+body {
+    background-image: url('./2927262.jpg');
+    background-size: 100%;
+    background-repeat: no-repeat;
+    padding-top: 200px;
+}
+#main {
+width: 100%;;
+display: flex;
+justify-content: space-evenly;
+}
+  
+
+.input {
+    height: 45px;
+    width: 300px;
+    border: none;
+    
+    padding: 4px;
+    padding-left: 20    px;
+    
+    font-size: 1.1em;
+}
+#submit-button {
+    height: 45px;
+    width: 300px;
+    border-radius: 22.5px;
+    border: none;
+    background-color: #26bf69;
+    font-size: 1.1em;
+}
