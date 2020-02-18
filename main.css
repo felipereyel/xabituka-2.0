@@ -38,7 +38,7 @@ body {
 
 .right-align {
     display: flex;
-    align-items: center;
+    align-items: initial;
     justify-content: center;
     width: 50%;
     height: 100%;   
