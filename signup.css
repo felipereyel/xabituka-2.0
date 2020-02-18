@@ -37,9 +37,6 @@ body {
 }
 
 .right-align {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     width: 50%;
     height: 100%;   
     float: right;
@@ -86,4 +83,36 @@ h1 {
 #submit-button:hover {
     background-color: rgba(113, 90, 232, 0.6);
     transition-duration: 700ms;
+}
+
+#button-login {
+    float: right;
+    height: 45px;
+    border-radius: 22.5px;
+    font-size: 1.3em;
+    border: none;
+    color: #ffffff;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-family: 'Source Sans Pro', sans-serif;
+    text-decoration: none;
+    margin-right: 10px;
+    background-color: rgb(113, 90, 232);
+    width: 100px;
+    height: 45px;
+    text-align: center;
+    line-height: 45px;
+}
+
+.button-login-wrapper {
+    display: inline-block;
+    width: 100%;
+    height: 10%;
+}
+
+.form-wrapper {
+    height: 90%;
+    display: inline-block; 
+    align-items: center;
+    justify-content: center;
 }
