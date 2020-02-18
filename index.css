@@ -1,0 +1,25 @@
+h1 {
+    text-align: center;
+}
+
+body {
+    padding-right: 550px;
+    padding-top: 325px;
+    background-image: url('./2927262.jpg');
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+#main {
+width: 100%;;
+display: flex;
+justify-content: space-evenly;
+}
+
+form {
+    display: inline-block;
+    text-align: center;
+    background-color: rgb(252, 252, 252);
+    width: 400px;
+    padding: 40px;
+    box-sizing: border-box;
+}
