@@ -18,7 +18,8 @@ justify-content: space-evenly;
 form {
     display: inline-block;
     text-align: center;
-    background-color: rgb(252, 252, 252);
+    background-color: rgb(253, 253, 253);
+    border-radius: 28%;
     width: 400px;
     padding: 40px;
     box-sizing: border-box;
