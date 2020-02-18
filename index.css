@@ -16,6 +16,7 @@ justify-content: space-evenly;
 }
 
 form {
+    font-family: 'Righteous', cursive;
     display: inline-block;
     text-align: center;
     background-image: linear-gradient(to right, rgb(255,255,255) , rgb(252,252,252));
@@ -23,4 +24,26 @@ form {
     width: 400px;
     padding: 40px;
     box-sizing: border-box;
+}
+
+.input {
+    height: 45px;
+    width: 300px;
+    border-radius: 22.5px;
+    border: none;
+    background-color: #DDD;
+    padding: 4px;
+    padding-left: 20    px;
+    box-sizing: border-box;
+    font-size: 1.1em;
+}
+#submit-button {
+    height: 45px;
+    width: 300px;
+    border-radius: 22.5px;
+    border: none;
+    background-color: #26bf69;
+    box-sizing: border-box;
+    font-size: 1.1em;
+    color: #ffffff;
 }

@@ -3,6 +3,7 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="index.css">
+    <link href="https://fonts.googleapis.com/css?family=Righteous&display=swap" rel="stylesheet">
     <title>Xabituca</title>
 </head>
 
@@ -12,12 +13,14 @@
 
         <form action="main.html">
             <h1>Login</h1>
-            <label for="fname">User:</label><br>
-            <input type="text" id="user" name="user"><br>
-            <label for="lname">Password:</label><br>
-            <input type="password" id="password" name="password"><br>
-            <br>
-            <input type="submit" value="Submit">
+
+            <!-- <label for="login">Login:</label><br> -->
+            <input placeholder="Login" class="input" type="text" id="login" name="login"><br><br>
+
+            <!-- <label for="password">Password:</label><br> -->
+            <input placeholder="Password" class="input" type="password" id="password" name="password"><br><br>
+
+            <button id="submit-button" type="submit" value="Submit">Submit</button>
         </form>
     </div>
 </body>
