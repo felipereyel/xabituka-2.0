@@ -87,7 +87,7 @@ h1 {
     transition-duration: 700ms;
 }
 
-#group-button {
+.group-button {
     border-bottom: 1px solid #aaaaaa;
     height: 45px;
     width: 90%;
@@ -106,6 +106,8 @@ h1 {
 
 .self-message-box {
     padding-left: 20px;
+    display: inline-flex;
+    text-align: right;
 }
 
 .other-message-box {
