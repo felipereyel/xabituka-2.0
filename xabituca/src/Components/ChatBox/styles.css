@@ -1,0 +1,127 @@
+.input {
+    height: 45px;
+    width: 300px;
+    border-radius: 22.5px;
+    border: none;
+    color: #444444;
+    background-color: #DDD;
+    padding: 4px;
+    padding-left: 20px;
+    box-sizing: border-box;
+    font-size: 1.1em;
+}
+
+.wrapper{
+    position: relative;
+    width: 100%;
+    height: 98vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#sign {
+    height: 600px;
+    width: 1000px;
+    background-color: #ffffff;
+    text-align: center;
+    border-radius: 30px;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+.right-align {
+    display: flex;
+    align-items: initial;
+    justify-content: center;
+    width: 70%;
+    height: 100%;   
+    float: right;
+    border-left: 3px solid #aaaaaa;
+    box-sizing: border-box;
+}
+
+.left-align {
+    align-items: center;
+    justify-content: center;
+    width: 30%;
+    height: 100%;
+    float: left;
+    box-sizing: border-box;
+}
+
+label {
+    font-size: 1.3em;
+}
+
+#logo {
+    width: 400px;
+}
+
+h1 {
+    font-size: 60px;
+    color: #444444;
+    font-family: 'Lato', sans-serif;
+}
+
+#submit-button {
+    height: 45px;
+    width: 300px;
+    border-radius: 22.5px;
+    border: #ffffff;
+    background-color: rgb(113, 90, 232);
+    box-sizing: border-box;
+    font-size: 1.1em;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+#submit-button:hover {
+    background-color: rgba(113, 90, 232, 0.6);
+    transition-duration: 700ms;
+}
+
+.group-button {
+    border-bottom: 1px solid #aaaaaa;
+    height: 45px;
+    width: 90%;
+    box-sizing: border-box;
+    font-size: 1.1em;
+    cursor: pointer;
+}
+
+.chat-box {
+    width: 90%
+}
+
+.message-box {
+    padding-bottom: 4px;
+}
+
+.self-message-box {
+    padding-left: 20px;
+    display: inline-flex;
+    text-align: right;
+}
+
+.other-message-box {
+    padding-right: 20px;
+}
+
+.self-message-content {
+    background-color: springgreen;
+    text-align: right;
+    width: max-content;
+    border-radius: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.other-message-content {
+    background-color: #B19CD9;
+    text-align: left;
+    width: max-content;
+    border-radius: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}

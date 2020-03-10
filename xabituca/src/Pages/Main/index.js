@@ -2,6 +2,7 @@ import React from 'react';
 import './styles.css'
 import logo from '../../Assets/logo.png'
 import ChatGroup from '../../Components/ChatGroup'
+import ChatBox from '../../Components/ChatBox'
 
 function MainPage() {
   const chatList = [
@@ -42,7 +43,9 @@ function MainPage() {
             ))
           }
         </div>
-        <div className="main-chat"></div>
+        <div className="main-chat">
+            <ChatBox />
+        </div>
       </div>
     </div>
   );
