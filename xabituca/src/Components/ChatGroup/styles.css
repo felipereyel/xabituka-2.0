@@ -1,0 +1,41 @@
+.chat-group-img-wrapper {
+    height: 58px;
+    width: 58px;
+    box-sizing: border-box;
+    padding: 8px;
+    /* background-color: #FFFFFF;  */
+}
+
+.chat-group-box {
+    display: flex;
+    text-align: left;
+    height: 72px;
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    /* background-color: rgba(255, 255, 255); */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.chat-group-img {
+    border-radius: 50%;
+    height: 100%;
+    width: 100%;
+}
+
+.chat-group-right-wrapper {
+    width: auto;
+    flex: 1;
+    padding: 4px 8px;
+}
+
+.chat-group-title {
+    font-size: 18px;
+}
+.chat-group-last-message {
+    font-size: 14px;
+}
+
+.chat-group-box:hover {
+    
+}
