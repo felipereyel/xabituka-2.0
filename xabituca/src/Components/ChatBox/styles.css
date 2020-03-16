@@ -30,7 +30,7 @@
     box-sizing: border-box;
 }
 
-.right-align {
+.chat-box-right-align {
     display: flex;
     align-items: initial;
     justify-content: center;

@@ -27,8 +27,8 @@ function ChatBox() {
     return (
         <div className="chat-box">
             {
-                messageList.map ((message) => (
-                    <Message message={message} user={user}/>
+                messageList.map((message) => (
+                    <Message message={message} user={user} />
                 ))
             }
         </div>
@@ -36,3 +36,4 @@ function ChatBox() {
 }
 
 export default ChatBox;
+
