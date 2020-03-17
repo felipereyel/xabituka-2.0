@@ -7,11 +7,12 @@
     background-color: #DDD;
     padding: 4px;
     padding-left: 20px;
-    box-sizing: border-box;
     font-size: 1.1em;
+    box-sizing: border-box;
     margin-bottom: 18px;
     outline: none;
 }
+
 
 .main-wrapper{
     position: relative;

@@ -38,7 +38,7 @@ function Message(props) {
                 </div>
             }
             <div className={messageOwnerDiffer(props.user, props.message.user).messageContent}>
-            Hi, how are you samim?Hi, how are you samim?Hi, how are you samim?Hi, how are you samim?Hi, how are you samim?Hi, how are you samim?Hi, how are you samim?Hi, how are you samim?Hi, how are you samim?Hi, how are you samim?Hi, how are you samim?Hi, how are you samim?Hi, how are you samim?Hi, how are you samim?Hi, how are you samim?Hi, how are you samim?Hi, how are you samim?Hi, how are you samim?Hi, how are you samim?Hi, how are you samim?Hi, how are you samim?Hi, how are you samim?Hi, how are you samim?Hi, how are you samim?
+                {props.message.text}
 	 		<span className={messageOwnerDiffer(props.user, props.message.user).messageTime}>8:40 AM, Today</span>
             </div>
         </div>

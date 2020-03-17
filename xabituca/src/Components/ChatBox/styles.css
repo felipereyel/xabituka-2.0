@@ -41,15 +41,6 @@
     box-sizing: border-box;
 }
 
-.left-align {
-    align-items: center;
-    justify-content: center;
-    width: 30%;
-    height: 100%;
-    float: left;
-    box-sizing: border-box;
-}
-
 label {
     font-size: 1.3em;
 }
@@ -91,7 +82,9 @@ h1 {
 }
 
 .chat-box {
-    width: 90%
+    width: 100%;
+    padding: 4%;
+    box-sizing: border-box;
 }
 
 .message-box {
