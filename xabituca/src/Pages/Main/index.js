@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 import unicorn from '../../Assets/unicorn.gif'
+import unicornicon from '../../Assets/unicorn-icon.png'
 import send from '../../Assets/send.png'
-import clip from '../../Assets/clip.png'
 import './styles.css'
 import logo from '../../Assets/logo.png'
 import ChatGroup from '../../Components/ChatGroup'
@@ -53,12 +53,14 @@ function MainPage() {
   return (
     <div className="main-wrapper">
       <div className="white-box-main">
-        <div className="main-chat-list">
-          {
-            chatList.map(chat => (
-              <ChatGroup key={chat.groupId} chat={chat} setSelectedGroup={setSelectedGroup} />
-            ))
-          }
+        <div className="main-chat-list-wrapper">
+          <div className="main-chat-list">
+            {
+              chatList.map(chat => (
+                <ChatGroup key={chat.groupId} chat={chat} setSelectedGroup={setSelectedGroup} />
+              ))
+            }
+          </div>
         </div>
         <div className="main-chat">
           {(selectedGroup !== null)
@@ -71,19 +73,30 @@ function MainPage() {
                 </div>
                 <ChatBox groupId={selectedGroup.id} />
                 <div className="main-input-wrapper">
-                  <img className="main-clip-button" src={clip} alt="Anexar" />
+                  <img
+                    onClick={() => setSelectedGroup(null)}
+                    className="main-unicorn-icon-button"
+                    src={unicornicon}
+                    alt="Voltar" />
                   <input className="main-input-message" />
                   <img className="main-send-button" src={send} alt="Enviar" />
                 </div>
               </>
             )
             : (
-              <img className="main-no-group-selected" src={unicorn} alt="Escolha um chat" />
+              <>
+                {/* <img className="main-no-group-selected" src={unicorn} alt="Escolha um chat" /> */}
+                <div className="main-zoom-unicorn-wrapper">
+                  <div className="main-zoom-unicorn">
+
+                  </div>
+                </div>
+              </>
             )
           }
         </div>
       </div>
-    </div>
+    </div >
   );
 }
 
