@@ -85,6 +85,8 @@ h1 {
     width: 100%;
     padding: 4%;
     box-sizing: border-box;
+    flex: 1;
+    overflow-y: auto;
 }
 
 .message-box {

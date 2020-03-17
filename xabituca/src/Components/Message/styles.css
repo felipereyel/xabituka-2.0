@@ -15,7 +15,7 @@
     justify-content: flex-start;
     display: flex;
     font-family: Helvetica, sans-serif;
-    font-size: 18px;
+    font-size: 17.5px;
 }
 
 
@@ -24,7 +24,7 @@
     justify-content: flex-end;
     display: flex;
     font-family: Helvetica, sans-serif;
-    font-size: 18px;
+    font-size: 17.5px;
 }
 
 .self-message-content {
@@ -46,21 +46,33 @@
     background-color: #82ccdd;
     padding: 16px;
     position: relative;
+    
 }
 
 .self-message-time{
     position: absolute;
     right:0;
     bottom: -15px;
-    color: rgba(0, 0, 0, 0.5);
+    color: #DDD;
     font-size: 10px;
+    margin-right: 24px;
 } 
 
 .other-message-time{
     position: absolute;
     left: 0;
     bottom: -15px;
-    color: rgba(0, 0, 0, 0.5);
+    color: #DDD;
     font-size: 10px;
+    margin-left: 16px;
 }
 
+.message-user-name {
+    /* margin-bottom: 1.5rem;
+    justify-content: flex-start;
+    display: flex; */
+    font-family: Helvetica, sans-serif;
+    font-size: 19.5px;
+    font-weight: bold;
+    color: #222;
+}
