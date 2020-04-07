@@ -1,7 +1,6 @@
 package com.example.Xabituka.controller;
 
 
-import com.example.Xabituka.model.Contests;
 import com.example.Xabituka.repository.ContestsRepository;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,6 +1,5 @@
 package com.example.Xabituka.controller;
 
-import com.example.Xabituka.model.LearnScoreboard;
 import com.example.Xabituka.repository.LearnScoreboardRepository;
 import org.springframework.web.bind.annotation.*;
 

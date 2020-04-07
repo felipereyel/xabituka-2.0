@@ -1,20 +1,23 @@
 package com.example.Xabituka.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.sql.Time;
 
 @NoArgsConstructor
 @Entity
 @Data
-public class Topics {
+public class Groups {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "subject_id")
-    private Long subjectId;
     private String name;
+    private String photo;
+    @Column(name = "owner_id")
+    private Long ownerId;
+    @Column(name = "created_at")
+    private Time createdAt;
+    private String description;
 }

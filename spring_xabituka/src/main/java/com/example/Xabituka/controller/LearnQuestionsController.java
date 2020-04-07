@@ -1,15 +1,10 @@
 package com.example.Xabituka.controller;
 
-import com.example.Xabituka.model.LearnAnswers;
-import com.example.Xabituka.model.LearnQuestions;
 import static com.example.Xabituka.model.LearnQuestions.applyHeuristic;
 import com.example.Xabituka.model.Topics;
 import com.example.Xabituka.repository.LearnAnswersRepository;
 import com.example.Xabituka.repository.LearnQuestionsRepository;
 import com.example.Xabituka.repository.TopicsRepository;
-import java.util.Collection;
-import java.util.LinkedHashMap;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

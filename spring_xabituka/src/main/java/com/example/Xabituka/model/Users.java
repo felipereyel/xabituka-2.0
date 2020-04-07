@@ -5,17 +5,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.sql.Time;
 
-@AllArgsConstructor // Cria construtores automaticamente
+@AllArgsConstructor
 @NoArgsConstructor
-@Entity // Indica que é uma tabela no Banco de Dados
-@Data // Adiciona métodos Getters, Setters, toString, equals, entre outros
+@Entity
+@Data
 public class Users {
-    @Id // Indica que a variável é um ID no banco
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Escolhe a estratégia para geração do ID
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nickname;
-    private String userType;
+    private String full_name;
+    private String photo;
+    @Column(name = "created_at")
+    private Time createdAt;
     @Column(name = "psswd")
     private String pw;
 }
