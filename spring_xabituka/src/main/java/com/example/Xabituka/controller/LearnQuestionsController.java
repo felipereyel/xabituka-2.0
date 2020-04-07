@@ -2,8 +2,6 @@ package com.example.Xabituka.controller;
 
 import static com.example.Xabituka.model.LearnQuestions.applyHeuristic;
 import com.example.Xabituka.model.Topics;
-import com.example.Xabituka.repository.LearnAnswersRepository;
-import com.example.Xabituka.repository.LearnQuestionsRepository;
 import com.example.Xabituka.repository.TopicsRepository;
 import org.springframework.web.bind.annotation.*;
 
