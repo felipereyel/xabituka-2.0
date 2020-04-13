@@ -11,11 +11,11 @@ import java.util.Map;
 
 @RestController
 @RequestMapping({"/users"})
-public class UsersController {
+public class GroupController {
 
     private UsersRepository repository;
 
-    public UsersController(UsersRepository repository) {
+    public GroupController(UsersRepository repository) {
         this.repository = repository;
     }
 
