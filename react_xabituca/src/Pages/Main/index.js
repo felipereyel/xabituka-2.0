@@ -7,10 +7,45 @@ import logo from '../../Assets/logo.png'
 import ChatGroup from '../../Components/ChatGroup'
 import ChatBox from '../../Components/ChatBox'
 import api from '../../Services/api'
+import { notification } from 'antd'
 
 function MainPage() {
   const [selectedGroup, setSelectedGroup] = useState(null);
   const [chatList, setChatList] = useState([]);
+  const [message, setMessage] = useState('')
+
+  async function sendMessage(event) {
+    event.preventDefault()
+
+    try {
+      const res = await api.post(`/messages/${selectedGroup.id}`,
+        {
+          content: message,
+          userName: localStorage.getItem('nickname'),
+        },
+        {
+          headers: {
+            Authorization: localStorage.getItem('token')
+          }
+        }
+      )
+      const data = res.data
+      console.log(data)
+
+      setMessage('')
+    }
+
+    catch (err) {
+      console.log(err)
+
+      const args = {
+        message: 'Erro',
+        description: 'Mensagem não enviada. Verifique sua conexão.',
+      }
+
+      notification.open(args)
+    }
+  }
 
   useEffect(() => {
     async function fetchChatList() {
@@ -80,15 +115,28 @@ function MainPage() {
                   </div>
                 </div>
                 <ChatBox groupId={selectedGroup.id} />
-                <div className="main-input-wrapper">
+                <form
+                  className="main-input-wrapper"
+                  onSubmit={sendMessage}
+                >
                   <img
                     onClick={() => setSelectedGroup(null)}
                     className="main-unicorn-icon-button"
                     src={unicornicon}
-                    alt="Voltar" />
-                  <input className="main-input-message" />
-                  <img className="main-send-button" src={send} alt="Enviar" />
-                </div>
+                    alt="Voltar"
+                  />
+                  <input
+                    className="main-input-message"
+                    defaultValue={message}
+                    onChange={(event) => setMessage(event.target.value)}
+                  />
+                  <img
+                    className="main-send-button"
+                    src={send}
+                    alt="Enviar"
+                    onClick={sendMessage}
+                  />
+                </form>
               </>
             )
             : (
@@ -104,7 +152,7 @@ function MainPage() {
           }
         </div>
       </div>
-    </div >
+    </div>
   );
 }
 

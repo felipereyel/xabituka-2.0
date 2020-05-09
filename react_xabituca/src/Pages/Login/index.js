@@ -24,9 +24,12 @@ function LoginPage() {
       })
 
       const data = await res.data
+      console.log(data)
 
       if (data.authorization === 'Allowed') {
         await localStorage.setItem('token', data.token)
+        await localStorage.setItem('nickname', data.user.nickname)
+        await localStorage.setItem('fullname', data.user.full_name)
         history.push('/main')
       }
 
