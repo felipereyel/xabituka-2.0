@@ -1,14 +1,56 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './styles.css'
 import logo from '../../Assets/logo.png'
 import { useHistory } from 'react-router-dom'
+import api from '../../Services/api'
+import { notification } from 'antd';
 
 function LoginPage() {
   const history = useHistory()
 
-  function submit(e) {
+  const [login, setLogin] = useState('')
+  const [password, setPassword] = useState('')
+
+
+  async function handleLogin(e) {
     e.preventDefault()
-    history.push('/main')
+
+    try {
+      const res = await api.get('/login', {
+        params: {
+          nickname: login,
+          psswd: password
+        }
+      })
+
+      const data = await res.data
+
+      if (data.authorization === 'Allowed') {
+        await localStorage.setItem('token', data.token)
+        history.push('/main')
+      }
+
+      else {
+        const args = {
+          message: 'Erro',
+          description: 'Usuário e/ou senha incorretos.',
+        }
+
+        notification.open(args)
+      }
+
+      console.log(res)
+    }
+    catch (err) {
+      console.log(err)
+
+      const args = {
+        message: 'Erro',
+        description: 'Erro no servidor.',
+      }
+
+      notification.open(args)
+    }
   }
 
   function changeToSignupScreen(event) {
@@ -21,20 +63,32 @@ function LoginPage() {
         <div className="right-align">
           <div className="button-login-wrapper">
             <button
-            className="button-login"
-            onClick={() => changeToSignupScreen()}
+              className="button-login"
+              onClick={() => changeToSignupScreen()}
             >Signup</button>
           </div>
           <div className="form-wrapper">
             <form>
               <h1>Login</h1>
               {/* <input placeholder="Name" className="input" type="text" /> */}
-              <input placeholder="Login" className="input" type="text" />
-              <input placeholder="Password" className="input" type="password" />
+              <input
+                className="input"
+                placeholder="Login"
+                type="text"
+                defaultValue={login}
+                onInput={(e) => setLogin(e.target.value)}
+              />
+              <input
+                className="input"
+                placeholder="Password"
+                type="password"
+                defaultValue={password}
+                onInput={(event) => setPassword(event.target.value)}
+              />
               <button
                 className="submit-button"
-                onClick={(e) => submit(e)}
-                >Submit
+                onClick={(e) => handleLogin(e)}
+              >Submit
               </button>
             </form>
           </div>
