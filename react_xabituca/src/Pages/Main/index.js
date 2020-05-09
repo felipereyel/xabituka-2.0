@@ -6,6 +6,7 @@ import './styles.css'
 import logo from '../../Assets/logo.png'
 import ChatGroup from '../../Components/ChatGroup'
 import ChatBox from '../../Components/ChatBox'
+import api from '../../Services/api'
 
 function MainPage() {
   const [selectedGroup, setSelectedGroup] = useState(null);
@@ -13,9 +14,16 @@ function MainPage() {
 
   useEffect(() => {
     async function fetchChatList() {
-      const res = await fetch("http://felipereyel.pythonanywhere.com/chat-list")
-      const data = await res.json()
-      console.log(data);
+      console.log(localStorage.getItem('token'))
+
+      const res = await api.get("/chat-list", {
+        headers: {
+          Authorization: localStorage.getItem('token')
+        }
+      })
+
+      const data = res.data
+      console.log(data)
       setChatList(data)
     }
 
@@ -57,7 +65,7 @@ function MainPage() {
           <div className="main-chat-list">
             {
               chatList.map(chat => (
-                <ChatGroup key={chat.groupId} chat={chat} setSelectedGroup={setSelectedGroup} />
+                <ChatGroup key={chat.id} chat={chat} setSelectedGroup={setSelectedGroup} />
               ))
             }
           </div>

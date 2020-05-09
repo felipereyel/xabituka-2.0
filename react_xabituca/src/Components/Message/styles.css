@@ -16,6 +16,7 @@
     display: flex;
     font-family: Helvetica, sans-serif;
     font-size: 17.5px;
+    color: #000000;
 }
 
 
@@ -25,6 +26,7 @@
     display: flex;
     font-family: Helvetica, sans-serif;
     font-size: 17.5px;
+    color: #000000;
 }
 
 .self-message-content {
@@ -36,6 +38,7 @@
     padding: 16px;
     position: relative;
     text-align: left;
+    color: #000000;
 }
 
 .other-message-content {
@@ -46,7 +49,7 @@
     background-color: #82ccdd;
     padding: 16px;
     position: relative;
-    
+    color: #000000;
 }
 
 .self-message-time{
