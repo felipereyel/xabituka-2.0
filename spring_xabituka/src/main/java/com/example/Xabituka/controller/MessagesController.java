@@ -44,7 +44,7 @@ public class MessagesController {
 
         Optional<Users> optUser = Optional.ofNullable(usersRepository.findByToken(token));
         if(optUser.isEmpty()){
-            res.put("sucess", false);
+            res.put("success", false);
             res.put("reason", "Invalid token");
             return (LinkedHashMap) res;
         }
@@ -52,19 +52,19 @@ public class MessagesController {
 
         Optional<User_Group> optMembership = userGroupRepository.findByUserIdAndGroupId(user.getId(), groupId);
         if(optMembership.isEmpty()){
-            res.put("sucess", false);
+            res.put("success", false);
             res.put("reason", "Invalid membership");
             return (LinkedHashMap) res;
         }
 
         User_Group membership = optMembership.get();
         if(membership.getExitedAt() != null){
-            res.put("sucess", false);
+            res.put("success", false);
             res.put("reason", "Invalid membership");
             return (LinkedHashMap) res;
         }
 
-        res.put("sucess", true);
+        res.put("success", true);
         res.put("messages", findMessagesByGroupId(groupId));
         return (LinkedHashMap) res;
     }
@@ -79,7 +79,7 @@ public class MessagesController {
 
         Optional<Users> optUser = Optional.ofNullable(usersRepository.findByToken(token));
         if(optUser.isEmpty()){
-            res.put("sucess", false);
+            res.put("success", false);
             res.put("reason", "Invalid token");
             return (LinkedHashMap) res;
         }
@@ -87,21 +87,21 @@ public class MessagesController {
 
         Optional<User_Group> optMembership = userGroupRepository.findByUserIdAndGroupId(user.getId(), groupId);
         if(optMembership.isEmpty()){
-            res.put("sucess", false);
+            res.put("success", false);
             res.put("reason", "Invalid membership");
             return (LinkedHashMap) res;
         }
 
         User_Group membership = optMembership.get();
         if(membership.getExitedAt() != null){
-            res.put("sucess", false);
+            res.put("success", false);
             res.put("reason", "Invalid membership");
             return (LinkedHashMap) res;
         }
 
         String content = (String) body.get("content");
         if(content.isBlank()){
-            res.put("sucess", false);
+            res.put("success", false);
             res.put("reason", "Invalid content");
             return (LinkedHashMap) res;
         }
@@ -112,7 +112,7 @@ public class MessagesController {
         );
         repository.save(message);
 
-        res.put("sucess", true);
+        res.put("success", true);
         res.put("messages", findMessagesByGroupId(groupId));
         return (LinkedHashMap) res;
     }

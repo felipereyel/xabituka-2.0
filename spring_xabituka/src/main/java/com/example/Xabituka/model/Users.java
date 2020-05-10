@@ -1,5 +1,6 @@
 package com.example.Xabituka.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,9 +28,11 @@ public class Users {
     @Column(name = "created_at")
     private Timestamp createdAt;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(name = "psswd")
     private String pw;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String token;
 
     public Users(String nickname, String full_name, String psswd) {

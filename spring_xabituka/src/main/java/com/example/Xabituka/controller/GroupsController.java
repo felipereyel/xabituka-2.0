@@ -41,7 +41,7 @@ public class GroupsController {
         Optional<Users> optUser = Optional.ofNullable(usersRepository.findByToken(token));
 
         if(optUser.isEmpty()){
-            res.put("sucess", false);
+            res.put("success", false);
             res.put("reason", "Invalid token");
             return (LinkedHashMap) res;
         }
@@ -61,7 +61,7 @@ public class GroupsController {
                 .collect(Collectors.toList());
 
 
-        res.put("sucess", true);
+        res.put("success", true);
         res.put("groups", groups);
         return (LinkedHashMap) res;
     }

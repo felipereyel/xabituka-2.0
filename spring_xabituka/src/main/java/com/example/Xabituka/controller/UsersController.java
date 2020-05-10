@@ -47,7 +47,6 @@ public class UsersController {
         if (existingUser.isPresent()) {
             res.put("success", false);
             res.put("reason", "Already user with nickname");
-            res.put("user", body);
             return (LinkedHashMap) res;
         }
 
@@ -84,6 +83,7 @@ public class UsersController {
 
         res.put("success", true);
         res.put("user", user);
+        res.put("token", user.getToken());
         return (LinkedHashMap) res;
     }
 }
