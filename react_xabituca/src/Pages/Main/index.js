@@ -1,32 +1,65 @@
 import React, { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import unicorn from '../../Assets/unicorn.gif'
 import './styles.css'
 import logo from '../../Assets/logo.png'
 import ChatGroup from '../../Components/ChatGroup'
 import ChatBox from '../../Components/ChatBox'
 import api from '../../Services/api'
+import { notification } from 'antd';
+
 
 function MainPage() {
   const [selectedGroup, setSelectedGroup] = useState(null);
   const [chatList, setChatList] = useState([]);
 
-  // useEffect(() => {
-  //   async function fetchChatList() {
-  //     console.log(localStorage.getItem('token'))
+  const history = useHistory()
 
-  //     const res = await api.get("/groups", {
-  //       headers: {
-  //         Authorization: localStorage.getItem('token')
-  //       }
-  //     })
 
-  //     const data = res.data
-  //     console.log(data)
-  //     setChatList(data)
-  //   }
+  useEffect(() => {
+    async function fetchChatList() {
+      try {
 
-  //   fetchChatList()
-  // }, []);
+        const res = await api.get("/groups", {
+          headers: {
+            Authorization: localStorage.getItem('token')
+          }
+        })
+        const data = res.data
+        console.log(data)
+
+        if (data.success === true) {
+          setChatList(data.groups)
+        }
+
+        else {
+          const args = {
+            message: 'Erro',
+            description: 'Erro ao carregar grupos. Por favor, faça o login novamente.',
+          }
+
+          notification.open(args)
+          history.push('/login')
+          localStorage.clear()
+        }
+
+        // setChatList(data)
+      }
+      catch (err) {
+        console.log(err)
+
+        const args = {
+          message: 'Erro',
+          description: 'Erro no servidor.',
+        }
+
+        notification.open(args)
+      }
+
+    }
+
+    fetchChatList()
+  }, []);
 
   return (
     <div className="main-wrapper">
@@ -34,8 +67,8 @@ function MainPage() {
         <div className="main-chat-list-wrapper">
           <div className="main-chat-list">
             {
-              chatList.map(chat => (
-                <ChatGroup key={chat.id} chat={chat} setSelectedGroup={setSelectedGroup} />
+              chatList.map(group => (
+                <ChatGroup key={group.id} group={group} setSelectedGroup={setSelectedGroup} />
               ))
             }
           </div>
