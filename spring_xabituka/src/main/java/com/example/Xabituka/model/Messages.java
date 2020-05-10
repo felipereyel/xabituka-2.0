@@ -25,4 +25,10 @@ public class Messages {
 
     @Column(name = "created_at")
     private Timestamp createdAt;
+
+    public Messages(User_Group membership, String content) {
+        this.content = content;
+        this.userGroup = membership;
+        this.createdAt = new Timestamp(System.currentTimeMillis());
+    }
 }

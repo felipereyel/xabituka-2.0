@@ -20,11 +20,13 @@ public class UsersController {
         this.repository = repository;
     }
 
+    // apagar
     @GetMapping
     public List findAll() {
         return repository.findAll();
     }
 
+    // apagar
     @GetMapping(path = {"/{id}"})
     public ResponseEntity findById(@PathVariable long id) {
         return repository.findById(id)

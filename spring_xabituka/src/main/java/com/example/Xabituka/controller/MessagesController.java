@@ -50,12 +50,40 @@ public class MessagesController {
         }
         Users user = optUser.get();
 
-        Optional<Groups> optGroup = groupsRepository.findById(groupId);
-        if(optGroup.isEmpty()){
+        Optional<User_Group> optMembership = userGroupRepository.findByUserIdAndGroupId(user.getId(), groupId);
+        if(optMembership.isEmpty()){
             res.put("sucess", false);
-            res.put("reason", "Wrong data");
+            res.put("reason", "Invalid membership");
             return (LinkedHashMap) res;
         }
+
+        User_Group membership = optMembership.get();
+        if(membership.getExitedAt() != null){
+            res.put("sucess", false);
+            res.put("reason", "Invalid membership");
+            return (LinkedHashMap) res;
+        }
+
+        res.put("sucess", true);
+        res.put("messages", findMessagesByGroupId(groupId));
+        return (LinkedHashMap) res;
+    }
+
+    @PostMapping(path = {"/{groupId}"})
+    public LinkedHashMap pushNew(
+            @PathVariable long groupId,
+            @RequestBody LinkedHashMap body,
+            @RequestHeader("Authorization") String token
+    ) {
+        Map res = new LinkedHashMap();
+
+        Optional<Users> optUser = Optional.ofNullable(usersRepository.findByToken(token));
+        if(optUser.isEmpty()){
+            res.put("sucess", false);
+            res.put("reason", "Invalid token");
+            return (LinkedHashMap) res;
+        }
+        Users user = optUser.get();
 
         Optional<User_Group> optMembership = userGroupRepository.findByUserIdAndGroupId(user.getId(), groupId);
         if(optMembership.isEmpty()){
@@ -70,6 +98,19 @@ public class MessagesController {
             res.put("reason", "Invalid membership");
             return (LinkedHashMap) res;
         }
+
+        String content = (String) body.get("content");
+        if(content.isBlank()){
+            res.put("sucess", false);
+            res.put("reason", "Invalid content");
+            return (LinkedHashMap) res;
+        }
+
+        Messages message = new Messages(
+            membership,
+            content
+        );
+        repository.save(message);
 
         res.put("sucess", true);
         res.put("messages", findMessagesByGroupId(groupId));
