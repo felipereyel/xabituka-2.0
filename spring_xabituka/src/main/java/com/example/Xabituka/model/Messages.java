@@ -15,9 +15,13 @@ public class Messages {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String content;
-    @Column(name = "user_group_id")
-    private Long userGroupId;
+
+    @ManyToOne
+    @JoinColumn(name = "user_group_id")
+    private User_Group userGroup;
+
     @Column(name = "created_at")
     private Time createdAt;
 }

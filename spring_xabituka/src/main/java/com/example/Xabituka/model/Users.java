@@ -1,10 +1,9 @@
 package com.example.Xabituka.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
+import org.apache.commons.lang3.RandomStringUtils;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -14,7 +13,6 @@ import java.sql.Timestamp;
 @Entity
 @Data
 public class Users {
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,12 +27,18 @@ public class Users {
     @Column(name = "created_at")
     private Timestamp createdAt;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(name = "psswd")
     private String pw;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String token;
+
+    public Users(String nickname, String full_name, String psswd) {
+        this.nickname = nickname;
+        this.fullName = full_name;
+        this.pw = psswd;
+        this.createdAt = new Timestamp(System.currentTimeMillis());
+        this.token = RandomStringUtils.randomAlphanumeric(10);
+    }
 
     public Long getId() {
         return id;
@@ -85,6 +89,6 @@ public class Users {
     }
 
     public void setCreatedAtNow() {
-        this.createdAt = new Timestamp(System.currentTimeMillis());;
+        this.createdAt = new Timestamp(System.currentTimeMillis());
     }
 }
