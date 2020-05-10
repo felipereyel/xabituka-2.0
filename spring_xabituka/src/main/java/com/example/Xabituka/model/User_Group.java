@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Time;
+import java.sql.Timestamp;
 
 @NoArgsConstructor
 @Entity
@@ -23,10 +24,10 @@ public class User_Group {
     private Groups group;
 
     @Column(name = "joined_at")
-    private Time joinedAt;
+    private Timestamp joinedAt;
 
     @Column(name = "exited_at")
-    private Time exitedAt;
+    private Timestamp exitedAt;
 
     public Long getId() {
         return id;
@@ -36,19 +37,19 @@ public class User_Group {
         this.id = id;
     }
 
-    public Time getJoinedAt() {
+    public Timestamp getJoinedAt() {
         return joinedAt;
     }
 
-    public void setJoinedAt(Time joinedAt) {
+    public void setJoinedAt(Timestamp joinedAt) {
         this.joinedAt = joinedAt;
     }
 
-    public Time getExitedAt() {
+    public Timestamp getExitedAt() {
         return exitedAt;
     }
 
-    public void setExitedAt(Time exitedAt) {
+    public void setExitedAt(Timestamp exitedAt) {
         this.exitedAt = exitedAt;
     }
 

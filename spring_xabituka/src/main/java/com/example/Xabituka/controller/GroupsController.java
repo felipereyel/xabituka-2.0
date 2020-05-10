@@ -71,23 +71,4 @@ public class GroupsController {
         List<Messages> messagesList = messagesRepository.findAllByUserGroupInOrderByCreatedAt(userGroups);
         return messagesList.get(0);
     }
-
-//    @GetMapping(path = {"/{id}"})
-//    public ResponseEntity findById(@PathVariable long id, @RequestParam String token) {
-//        Long userId = usersRepository.findByToken(token).getId();
-//        Optional<Groups> group = repository.findById(id);
-//
-//        if(group.isEmpty()){
-//            return ResponseEntity.notFound().build();
-//        }
-//
-//        Optional<User_Group> membership = Optional.ofNullable(userGroupRepository.findByUserIdAndGroupId(userId, id));
-//
-//        if(membership.isPresent() && membership.getExitedAt().isNull()){
-//            return repository.findById(id)
-//                    .map(record -> ResponseEntity.ok().body(record))
-//                    .orElse(ResponseEntity.notFound().build());
-//        }
-//
-//    }
 }

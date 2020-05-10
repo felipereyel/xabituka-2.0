@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Time;
+import java.sql.Timestamp;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,5 +24,5 @@ public class Messages {
     private User_Group userGroup;
 
     @Column(name = "created_at")
-    private Time createdAt;
+    private Timestamp createdAt;
 }
