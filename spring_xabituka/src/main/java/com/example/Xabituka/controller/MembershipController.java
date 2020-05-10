@@ -51,7 +51,7 @@ public class MembershipController {
         }
         Users selfUser = optSelfUser.get();
 
-        Optional<User_Group> optMembership = repository.findByUserIdAndGroupId(selfUser.getId(), groupId);
+        Optional<User_Group> optMembership = repository.findFirstByUserIdAndGroupIdOrderByJoinedAt(selfUser.getId(), groupId);
         if(optMembership.isEmpty()){
             res.put("success", false);
             res.put("reason", "Invalid membership");
@@ -80,6 +80,64 @@ public class MembershipController {
         User_Group membership = new User_Group(user, group, admin);
         repository.save(membership);
 
+        res.put("success", true);
+        res.put("membership", membership);
+        return (LinkedHashMap) res;
+    }
+
+    @GetMapping(path = {"/{groupId}/remove/{userId}"})
+    public LinkedHashMap remove(
+            @RequestHeader("Authorization") String token,
+            @PathVariable Long groupId,
+            @PathVariable Long userId
+    ) {
+        Map res = new LinkedHashMap();
+
+        Optional<Users> optSelfUser = usersRepository.findByToken(token);
+        if(optSelfUser.isEmpty()){
+            res.put("success", false);
+            res.put("reason", "Invalid token");
+            return (LinkedHashMap) res;
+        }
+        Users selfUser = optSelfUser.get();
+
+        Optional<User_Group> optSelfMembership = repository.findFirstByUserIdAndGroupIdOrderByJoinedAt(selfUser.getId(), groupId);
+        if(optSelfMembership.isEmpty()){
+            res.put("success", false);
+            res.put("reason", "Invalid membership");
+            return (LinkedHashMap) res;
+        }
+        User_Group selfMembership = optSelfMembership.get();
+
+        if(selfMembership.getExitedAt() != null){
+            res.put("success", false);
+            res.put("reason", "Invalid membership");
+            return (LinkedHashMap) res;
+        }
+
+        if(selfUser.getId().equals(userId)){
+            selfMembership.setExitedAt();
+            repository.save(selfMembership);
+            res.put("success", true);
+            res.put("membership", selfMembership);
+            return (LinkedHashMap) res;
+        }
+
+        if(!selfMembership.isAdmin()){
+            res.put("success", false);
+            res.put("reason", "Invalid membership");
+            return (LinkedHashMap) res;
+        }
+
+        Optional<User_Group> optMembership = repository.findFirstByUserIdAndGroupIdOrderByJoinedAt(userId, groupId);
+        if(!optMembership.isPresent()){
+            res.put("success", false);
+            res.put("reason", "Invalid membership");
+            return (LinkedHashMap) res;
+        }
+        User_Group membership = optMembership.get();
+        membership.setExitedAt();
+        repository.save(membership);
         res.put("success", true);
         res.put("membership", membership);
         return (LinkedHashMap) res;

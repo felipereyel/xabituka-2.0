@@ -51,7 +51,9 @@ public class User_Group {
 
     public Timestamp getExitedAt() { return exitedAt; }
 
-    public void setExitedAt(Timestamp exitedAt) { this.exitedAt = exitedAt; }
+    public void setExitedAt() {
+        this.exitedAt = new Timestamp(System.currentTimeMillis());
+    }
 
     public Users getUser() { return user; }
 

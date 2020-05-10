@@ -1,6 +1,5 @@
 package com.example.Xabituka.controller;
 
-import com.example.Xabituka.model.Groups;
 import com.example.Xabituka.model.Messages;
 import com.example.Xabituka.model.User_Group;
 import com.example.Xabituka.model.Users;
@@ -8,11 +7,9 @@ import com.example.Xabituka.repository.GroupsRepository;
 import com.example.Xabituka.repository.MessagesRepository;
 import com.example.Xabituka.repository.UserGroupRepository;
 import com.example.Xabituka.repository.UsersRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping({"/messages"})
@@ -50,7 +47,7 @@ public class MessagesController {
         }
         Users user = optUser.get();
 
-        Optional<User_Group> optMembership = userGroupRepository.findByUserIdAndGroupId(user.getId(), groupId);
+        Optional<User_Group> optMembership = userGroupRepository.findFirstByUserIdAndGroupIdOrderByJoinedAt(user.getId(), groupId);
         if(optMembership.isEmpty()){
             res.put("success", false);
             res.put("reason", "Invalid membership");
@@ -85,7 +82,7 @@ public class MessagesController {
         }
         Users user = optUser.get();
 
-        Optional<User_Group> optMembership = userGroupRepository.findByUserIdAndGroupId(user.getId(), groupId);
+        Optional<User_Group> optMembership = userGroupRepository.findFirstByUserIdAndGroupIdOrderByJoinedAt(user.getId(), groupId);
         if(optMembership.isEmpty()){
             res.put("success", false);
             res.put("reason", "Invalid membership");

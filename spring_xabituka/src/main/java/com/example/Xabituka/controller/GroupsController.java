@@ -112,7 +112,7 @@ public class GroupsController {
         }
         Users user = optUser.get();
 
-        Optional<User_Group> optMembership = userGroupRepository.findByUserIdAndGroupId(user.getId(), id);
+        Optional<User_Group> optMembership = userGroupRepository.findFirstByUserIdAndGroupIdOrderByJoinedAt(user.getId(), id);
         if(optMembership.isEmpty()){
             res.put("success", false);
             res.put("reason", "Invalid membership");
