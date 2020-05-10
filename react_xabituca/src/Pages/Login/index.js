@@ -16,7 +16,7 @@ function LoginPage() {
     e.preventDefault()
 
     try {
-      const res = await api.get('/login', {
+      const res = await api.get('/users/login', {
         params: {
           nickname: login,
           psswd: password
@@ -26,7 +26,7 @@ function LoginPage() {
       const data = await res.data
       console.log(data)
 
-      if (data.authorization === 'Allowed') {
+      if (data.success === true) {
         await localStorage.setItem('token', data.token)
         await localStorage.setItem('nickname', data.user.nickname)
         await localStorage.setItem('fullname', data.user.full_name)

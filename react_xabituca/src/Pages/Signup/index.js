@@ -16,7 +16,7 @@ function SignupPage() {
     event.preventDefault()
 
     try {
-      const res = await api.post('/sign-up', {
+      const res = await api.post('/users/sign-up', {
         nickname: login,
         full_name: name,
         psswd: password
