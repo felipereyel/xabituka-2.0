@@ -38,7 +38,7 @@ public class GroupsController {
     public LinkedHashMap findAll(@RequestHeader("Authorization") String token) {
         Map res = new LinkedHashMap();
 
-        Optional<Users> optUser = Optional.ofNullable(usersRepository.findByToken(token));
+        Optional<Users> optUser = usersRepository.findByToken(token);
 
         if(optUser.isEmpty()){
             res.put("success", false);

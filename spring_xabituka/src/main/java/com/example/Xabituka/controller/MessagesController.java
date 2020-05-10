@@ -42,7 +42,7 @@ public class MessagesController {
     ) {
         Map res = new LinkedHashMap();
 
-        Optional<Users> optUser = Optional.ofNullable(usersRepository.findByToken(token));
+        Optional<Users> optUser = usersRepository.findByToken(token);
         if(optUser.isEmpty()){
             res.put("success", false);
             res.put("reason", "Invalid token");
@@ -77,7 +77,7 @@ public class MessagesController {
     ) {
         Map res = new LinkedHashMap();
 
-        Optional<Users> optUser = Optional.ofNullable(usersRepository.findByToken(token));
+        Optional<Users> optUser = usersRepository.findByToken(token);
         if(optUser.isEmpty()){
             res.put("success", false);
             res.put("reason", "Invalid token");

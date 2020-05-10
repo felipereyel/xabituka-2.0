@@ -20,21 +20,45 @@ public class UsersController {
         this.repository = repository;
     }
 
-    // apagar
     @GetMapping
-    public List findAll() {
-        return repository.findAll();
+    public LinkedHashMap findAll() {
+        Map res = new LinkedHashMap();
+        res.put("success", true);
+        res.put("users", repository.findAll());
+        return (LinkedHashMap) res;
     }
 
-    // apagar
-    @GetMapping(path = {"/{id}"})
-    public ResponseEntity findById(@PathVariable long id) {
-        return repository.findById(id)
-                .map(record -> ResponseEntity.ok().body(record))
-                .orElse(ResponseEntity.notFound().build());
+    @PostMapping
+    public LinkedHashMap editSelf(
+        @RequestHeader("Authorization") String token,
+        @RequestBody LinkedHashMap body
+    ) {
+        Map res = new LinkedHashMap();
+
+        Optional<Users> optUser = repository.findByToken(token);
+        if(optUser.isEmpty()){
+            res.put("success", false);
+            res.put("reason", "Invalid token");
+            return (LinkedHashMap) res;
+        }
+        Users user = optUser.get();
+
+        String fullName = (String) body.getOrDefault("fullName", "");
+        if(!fullName.isBlank()) user.setFullName(fullName);
+
+        String photo = (String) body.getOrDefault("photo", "");
+        if(!photo.isBlank()) user.setPhoto(photo);
+
+        String psswd = (String) body.getOrDefault("psswd", "");
+        if(!psswd.isBlank()) user.setPw(psswd);
+
+        repository.save(user);
+
+        res.put("success", true);
+        res.put("user", user);
+        return (LinkedHashMap) res;
     }
 
-    // Show demais
     @PostMapping({"/sign-up"})
     public LinkedHashMap signup(@RequestBody LinkedHashMap body) {
         Map res = new LinkedHashMap();
@@ -62,7 +86,6 @@ public class UsersController {
         return (LinkedHashMap) res;
     }
 
-    // Show de bola
     @GetMapping({"/login"})
     public LinkedHashMap login(@RequestParam String nickname, @RequestParam String psswd) {
         Map res = new LinkedHashMap();
@@ -86,4 +109,8 @@ public class UsersController {
         res.put("token", user.getToken());
         return (LinkedHashMap) res;
     }
+
+//    return repository.findById(id)
+//            .map(record -> ResponseEntity.ok().body(record))
+//            .orElse(ResponseEntity.notFound().build());
 }
