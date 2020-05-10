@@ -1,7 +1,10 @@
 import React from 'react';
 import './styles.css'
 
-function Message(props) {
+function Message({ message, username }) {
+    console.log(message)
+    const { content, userGroup } = message
+    const { user: messageUser } = userGroup
 
     const cssClasses = {
         self: {
@@ -31,20 +34,20 @@ function Message(props) {
         }
     */
     return (
-        <div className={messageOwnerDiffer(props.user, props.message.userName).messageBox}>
-            {(props.user !== props.message.userName) &&
+        <div className={messageOwnerDiffer(username, messageUser.nickname).messageBox}>
+            {(username !== messageUser.nickname) &&
                 <div className="message-image-container">
                     <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" className="message-rounded-image" />
                 </div>
             }
-            <div className={messageOwnerDiffer(props.user, props.message.userName).messageContent}>
-                { (props.user !== props.message.userName) &&
+            <div className={messageOwnerDiffer(username, messageUser.nickname).messageContent}>
+                {(username !== messageUser.nickname) &&
                     <div className="message-user-name">
-                        {props.message.userName}
+                        {messageUser.fullName}
                     </div>
                 }
-                {props.message.content}
-                <span className={messageOwnerDiffer(props.user, props.message.userName).messageTime}>8:40 AM, Today</span>
+                {content}
+                <span className={messageOwnerDiffer(username, messageUser.nickname).messageTime}>8:40 AM, Today</span>
             </div>
         </div>
     )

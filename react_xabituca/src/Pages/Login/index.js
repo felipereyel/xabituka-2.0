@@ -29,7 +29,7 @@ function LoginPage() {
       if (data.success === true) {
         await localStorage.setItem('token', data.token)
         await localStorage.setItem('nickname', data.user.nickname)
-        await localStorage.setItem('fullname', data.user.full_name)
+        await localStorage.setItem('fullname', data.user.fullName)
         history.push('/main')
       }
 

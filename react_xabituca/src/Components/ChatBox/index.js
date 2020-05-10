@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom'
 import './styles.css'
 import Message from '../../Components/Message'
 import { notification } from 'antd'
@@ -11,13 +12,43 @@ function ChatBox({ groupId, unselectGroup }) {
   const user = "reyel"
   const [messageList, setMessageList] = useState([]);
   const [message, setMessage] = useState('')
+  const history = useHistory()
+
+  const username = localStorage.getItem('nickname')
 
   useEffect(() => {
     async function fetchMessageList() {
-      const res = await api.get(`/messages/${groupId}`)
-      const data = await res.data
-      console.log(data);
-      setMessageList(data)
+      try {
+        const res = await api.get(`/messages/${groupId}`, {
+          headers: {
+            Authorization: localStorage.getItem('token')
+          }
+        })
+        const data = await res.data
+        console.log(data);
+
+        if (data.success) {
+          setMessageList(data.messages)
+        }
+        else {
+          const args = {
+            message: 'Erro',
+            description: 'Erro ao carregar mensagens. Por favor, faça o login novamente.',
+          }
+
+          notification.open(args)
+          history.push('/login')
+          localStorage.clear()
+        }
+      }
+      catch (err) {
+        const args = {
+          message: 'Erro',
+          description: 'Erro no servidor. Tente novamente mais tarde',
+        }
+
+        notification.open(args)
+      }
     }
 
     fetchMessageList()
@@ -61,7 +92,7 @@ function ChatBox({ groupId, unselectGroup }) {
       <div className="chat-box">
         {
           messageList.map((message) => (
-            <Message key={message.id} message={message} user={user} />
+            <Message key={message.id} message={message} username={username} />
           ))
         }
       </div>
