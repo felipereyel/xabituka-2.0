@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 @NoArgsConstructor
@@ -30,7 +31,13 @@ public class Groups {
 
     private String description;
 
-    public LinkedHashMap toMapWithContext(Messages lastMessage){
+    public Groups(String name, Users user) {
+        this.name = name;
+        this.owner = user;
+        this.createdAt = new Timestamp(System.currentTimeMillis());
+    }
+
+    public LinkedHashMap toMapWithContext(List<Messages> lastMessage){
         Map repr = new LinkedHashMap();
         repr.put("id", this.getId());
         repr.put("name", this.getName());

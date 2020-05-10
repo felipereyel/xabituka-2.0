@@ -34,6 +34,13 @@ public class User_Group {
     @Column(name = "exited_at")
     private Timestamp exitedAt;
 
+    public User_Group(Users user, Groups group, boolean admin) {
+        this.user = user;
+        this.group = group;
+        this.admin = admin;
+        this.joinedAt = new Timestamp(System.currentTimeMillis());
+    }
+
     public Long getId() { return id; }
 
     public void setId(Long id) { this.id = id; }
@@ -53,4 +60,8 @@ public class User_Group {
     public Groups getGroup() { return group; }
 
     public void setGroup(Groups group) { this.group = group; }
+
+    public boolean isAdmin() {
+        return admin;
+    }
 }

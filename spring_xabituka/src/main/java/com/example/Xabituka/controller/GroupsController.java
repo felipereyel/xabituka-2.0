@@ -39,13 +39,11 @@ public class GroupsController {
         Map res = new LinkedHashMap();
 
         Optional<Users> optUser = usersRepository.findByToken(token);
-
         if(optUser.isEmpty()){
             res.put("success", false);
             res.put("reason", "Invalid token");
             return (LinkedHashMap) res;
         }
-
         Users user = optUser.get();
 
         Set<Groups> allowedGroups = userGroupRepository
@@ -60,15 +58,100 @@ public class GroupsController {
                 .map(it-> it.toMapWithContext(findLastByGroup(it)))
                 .collect(Collectors.toList());
 
-
         res.put("success", true);
         res.put("groups", groups);
         return (LinkedHashMap) res;
     }
 
-    Messages findLastByGroup(Groups group){
+    @PostMapping
+    public LinkedHashMap createOne(
+            @RequestHeader("Authorization") String token,
+            @RequestBody LinkedHashMap body
+    ) {
+        Map res = new LinkedHashMap();
+
+        Optional<Users> optUser = usersRepository.findByToken(token);
+        if(optUser.isEmpty()){
+            res.put("success", false);
+            res.put("reason", "Invalid token");
+            return (LinkedHashMap) res;
+        }
+        Users user = optUser.get();
+
+        String name = (String) body.get("name");
+        Groups group = new Groups(name, user);
+
+        String description = (String) body.getOrDefault("description", "");
+        if(!description.isBlank()) group.setDescription(description);
+
+        String photo = (String) body.getOrDefault("photo", "");
+        if(!photo.isBlank()) group.setPhoto(photo);
+        repository.save(group);
+
+        User_Group membership = new User_Group(user, group, true);
+        userGroupRepository.save(membership);
+
+        res.put("success", true);
+        res.put("group", group);
+        return (LinkedHashMap) res;
+    }
+
+    @PostMapping(path = {"/{id}"})
+    public LinkedHashMap edit(
+            @RequestHeader("Authorization") String token,
+            @RequestBody LinkedHashMap body,
+            @PathVariable Long id
+    ) {
+        Map res = new LinkedHashMap();
+
+        Optional<Users> optUser = usersRepository.findByToken(token);
+        if(optUser.isEmpty()){
+            res.put("success", false);
+            res.put("reason", "Invalid token");
+            return (LinkedHashMap) res;
+        }
+        Users user = optUser.get();
+
+        Optional<User_Group> optMembership = userGroupRepository.findByUserIdAndGroupId(user.getId(), id);
+        if(optMembership.isEmpty()){
+            res.put("success", false);
+            res.put("reason", "Invalid membership");
+            return (LinkedHashMap) res;
+        }
+
+        User_Group membership = optMembership.get();
+        if((membership.getExitedAt() != null) || (!membership.isAdmin())){
+            res.put("success", false);
+            res.put("reason", "Invalid membership");
+            return (LinkedHashMap) res;
+        }
+
+        Optional<Groups> optGroup = repository.findById(id);
+        Groups group = optGroup.get();
+
+        String description = (String) body.getOrDefault("description", "");
+        if(!description.isBlank()) group.setDescription(description);
+
+        String name = (String) body.getOrDefault("name", "");
+        if(!name.isBlank()) group.setName(name);
+
+        String photo = (String) body.getOrDefault("photo", "");
+        if(!photo.isBlank()) group.setPhoto(photo);
+        repository.save(group);
+
+        res.put("success", true);
+        res.put("group", group);
+        return (LinkedHashMap) res;
+    }
+
+    List<Messages> findLastByGroup(Groups group){
         List<User_Group> userGroups = userGroupRepository.findByGroupId(group.getId());
         List<Messages> messagesList = messagesRepository.findAllByUserGroupInOrderByCreatedAt(userGroups);
-        return messagesList.get(0);
+        try {
+            return List.of(messagesList.get(0));
+        }
+        catch (Exception e){
+            return Collections.emptyList();
+        }
     }
 }
