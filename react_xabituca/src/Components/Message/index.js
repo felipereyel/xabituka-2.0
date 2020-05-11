@@ -37,7 +37,7 @@ function Message({ message, username }) {
         <div className={messageOwnerDiffer(username, messageUser.nickname).messageBox}>
             {(username !== messageUser.nickname) &&
                 <div className="message-image-container">
-                    <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" className="message-rounded-image" />
+                    <img src={messageUser.photo} className="message-rounded-image" />
                 </div>
             }
             <div className={messageOwnerDiffer(username, messageUser.nickname).messageContent}>
