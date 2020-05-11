@@ -56,7 +56,7 @@ function ChatBox({ groupId, unselectGroup }) {
 
   async function sendMessage(event) {
     event.preventDefault()
-    setMessage('')
+    await setMessage('')
 
     try {
       const res = await api.post(`/messages/${groupId}`,
@@ -70,11 +70,10 @@ function ChatBox({ groupId, unselectGroup }) {
           }
         }
       )
-      const data = res.data
+      const data = await res.data
       console.log(data)
-      setMessageList(data.message)
+      await setMessageList(data.messages)
     }
-
     catch (err) {
       console.log(err)
 
@@ -98,7 +97,7 @@ function ChatBox({ groupId, unselectGroup }) {
       </div>
       <form
         className="main-input-wrapper"
-        onSubmit={sendMessage}
+        onSubmit={(event) => { message.length > 0 && sendMessage(event) }}
       >
         <img
           onClick={unselectGroup}
@@ -108,14 +107,16 @@ function ChatBox({ groupId, unselectGroup }) {
         />
         <input
           className="main-input-message"
-          defaultValue={message}
-          onChange={(event) => console.log(message) || setMessage(event.target.value)}
+          type="text"
+          placeholder="Digite uma mensagem"
+          value={message}
+          onInput={(event) => setMessage(event.target.value)}
         />
         <img
           className="main-send-button"
           src={send}
           alt="Enviar"
-          onClick={sendMessage}
+          onClick={(event) => { message.length > 0 && sendMessage(event) }}
         />
       </form>
     </>
