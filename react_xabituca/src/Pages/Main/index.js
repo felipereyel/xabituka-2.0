@@ -20,6 +20,7 @@ function MainPage() {
   const [newGroupDescription, setNewGroupDescription] = useState('')
   const [newGroupPhotoURL, setNewGroupPhotoURL] = useState('')
   const [creatingNewGroup, setCreatingNewGroup] = useState(false)
+  const [showingGroupDetails, setShowingGroupDetails] = useState(false)
 
   useEffect(() => {
     async function loadAllUsers() {
@@ -253,6 +254,46 @@ function MainPage() {
 
   }
 
+  async function fetchUsersFromGroup() {
+    try {
+
+      const res = await api.get("/groups", {
+        headers: {
+          Authorization: localStorage.getItem('token')
+        }
+      })
+      const data = res.data
+      console.log(data)
+
+      if (data.success === true) {
+        setChatList(data.groups)
+      }
+
+      else {
+        const args = {
+          message: 'Erro',
+          description: 'Erro ao carregar grupos. Por favor, faça o login novamente.',
+        }
+
+        notification.open(args)
+        history.push('/login')
+        localStorage.clear()
+      }
+
+      // setChatList(data)
+    }
+    catch (err) {
+      console.log(err)
+
+      const args = {
+        message: 'Erro',
+        description: 'Erro no servidor.',
+      }
+
+      notification.open(args)
+    }
+  }
+
   function filter(inputValue, path) {
     return path.some(option => option.label.toLowerCase().indexOf(inputValue.toLowerCase()) > -1);
   }
@@ -332,6 +373,15 @@ function MainPage() {
           defaultValue={newGroupPhotoURL}
           onInput={(event) => setNewGroupPhotoURL(event.target.value)}
         />
+      </Modal>
+
+      <Modal
+        title="Detalhes do grupo"
+        visible={showingGroupDetails}
+        onCancel={() => setShowingGroupDetails(false)}
+        footer={null}
+      >
+
       </Modal>
 
       <div className="white-box-main">
