@@ -8,7 +8,7 @@ function ChatGroup({ group, setSelectedGroup }) {
     let lastMessage = {
         userGroup: {
             user: {
-                nickname: "Xabituca"
+                nickname: ""
             }
         },
         content: "Nenhuma mensagem enviada."
