@@ -6,7 +6,7 @@ import logo from '../../Assets/logo.png'
 import ChatGroup from '../../Components/ChatGroup'
 import ChatBox from '../../Components/ChatBox'
 import api from '../../Services/api'
-import { notification, Modal, Cascader, Button } from 'antd'
+import { notification, Modal, Cascader, Button, Input } from 'antd'
 import { UserAddOutlined, CloseOutlined, UsergroupAddOutlined } from '@ant-design/icons';
 
 
@@ -16,6 +16,10 @@ function MainPage() {
   const [newUser, setNewUser] = useState({ isAdding: false, data: {} })
   const [allUsers, setAllUsers] = useState({ list: [], loading: true })
   const [leavingGroup, setLeavingGroup] = useState(false)
+  const [newGroupName, setNewGroupName] = useState('')
+  const [newGroupDescription, setNewGroupDescription] = useState('')
+  const [newGroupPhotoURL, setNewGroupPhotoURL] = useState('')
+  const [creatingNewGroup, setCreatingNewGroup] = useState(false)
 
   useEffect(() => {
     async function loadAllUsers() {
@@ -190,6 +194,65 @@ function MainPage() {
     }
   }
 
+  async function handleCreateGroup() {
+    setCreatingNewGroup(false)
+
+    console.log({
+      newGroupDescription,
+      newGroupName,
+      newGroupPhotoURL
+    })
+
+    try {
+      const token = await localStorage.getItem('token')
+
+      const res = await api.post('/groups',
+        {
+          name: newGroupName,
+          description: newGroupDescription,
+          photo: newGroupPhotoURL,
+        },
+        {
+          headers: {
+            Authorization: token
+          }
+        }
+      )
+      const data = await res.data
+
+      if (data.success === true) {
+
+        fetchChatList()
+        const args = {
+          message: 'Sucesso',
+          description: `Grupo ${newGroupName} criado com sucesso.`,
+        }
+
+        notification.open(args)
+      }
+      else {
+
+        const args = {
+          message: 'Erro',
+          description: `Erro ao criar novo grupo`,
+        }
+
+        notification.open(args)
+      }
+    }
+    catch (err) {
+      console.log(err)
+
+      const args = {
+        message: 'Erro',
+        description: `Erro ao criar novo grupo`,
+      }
+
+      notification.open(args)
+    }
+
+  }
+
   function filter(inputValue, path) {
     return path.some(option => option.label.toLowerCase().indexOf(inputValue.toLowerCase()) > -1);
   }
@@ -234,10 +297,47 @@ function MainPage() {
       >
         Tem certeza que deseja sair deste grupo?
       </Modal>
+
+      <Modal
+        title="Adicionar usuário ao grupo"
+        visible={creatingNewGroup}
+        onCancel={() => setCreatingNewGroup(false)}
+        width='80%'
+        footer={[
+          <Button key="confirm" onClick={() => handleCreateGroup()}>
+            Criar Grupo
+            </Button>,
+        ]}
+      >
+        <Input
+          placeholder="Nome do Grupo"
+          type="text"
+          defaultValue={newGroupName}
+          onInput={(e) => setNewGroupName(e.target.value)}
+        />
+        <br />
+        <br />
+        <Input.TextArea
+          placeholder="Descrição do Grupo"
+          type="text"
+          defaultValue={newGroupDescription}
+          onInput={(event) => setNewGroupDescription(event.target.value)}
+        />
+        <br />
+        <br />
+
+        <Input
+          placeholder="URL da foto do grupo"
+          type="text"
+          defaultValue={newGroupPhotoURL}
+          onInput={(event) => setNewGroupPhotoURL(event.target.value)}
+        />
+      </Modal>
+
       <div className="white-box-main">
         <div className="main-chat-list-wrapper">
           <div className="main-chat-list">
-            <div className="new-group">
+            <div className="new-group" onClick={() => setCreatingNewGroup(true)}>
               <div className="new-group-img-wrapper">
                 <UsergroupAddOutlined className="new-group-img" />
               </div>
