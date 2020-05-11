@@ -146,9 +146,10 @@ public class GroupsController {
 
     List<Messages> findLastByGroup(Groups group){
         List<User_Group> userGroups = userGroupRepository.findByGroupId(group.getId());
-        List<Messages> messagesList = messagesRepository.findAllByUserGroupInOrderByCreatedAtDesc(userGroups);
+        // pegar so a ultima
+        List<Messages> messagesList = messagesRepository.findAllByUserGroupInOrderByCreatedAt(userGroups);
         try {
-            return List.of(messagesList.get(0));
+            return List.of(messagesList.get(messagesList.size()-1));
         }
         catch (Exception e){
             return Collections.emptyList();

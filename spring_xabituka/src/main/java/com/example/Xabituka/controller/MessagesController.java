@@ -116,6 +116,6 @@ public class MessagesController {
 
     List<Messages> findMessagesByGroupId(Long groupId){
         List<User_Group> userGroups = userGroupRepository.findByGroupId(groupId);
-        return repository.findAllByUserGroupInOrderByCreatedAtDesc(userGroups);
+        return repository.findAllByUserGroupInOrderByCreatedAt(userGroups);
     }
 }
