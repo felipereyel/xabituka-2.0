@@ -6,7 +6,12 @@ import logo from '../../Assets/logo.png'
 import ChatGroup from '../../Components/ChatGroup'
 import ChatBox from '../../Components/ChatBox'
 import api from '../../Services/api'
-import { notification } from 'antd';
+import { notification } from 'antd'
+import {
+  UserAddOutlined,
+  CloseOutlined,
+  UsergroupAddOutlined
+} from '@ant-design/icons';
 
 
 function MainPage() {
@@ -66,6 +71,19 @@ function MainPage() {
       <div className="white-box-main">
         <div className="main-chat-list-wrapper">
           <div className="main-chat-list">
+            <div className="new-group">
+              <div className="new-group-img-wrapper">
+                <UsergroupAddOutlined className="new-group-img"/>
+              </div>
+              <div className="chat-group-right-wrapper">
+                <div className="chat-group-title">
+                    Criar novo grupo
+                </div>
+                <div className="chat-group-last-message">
+                    Venha se divertir no chat!
+                </div>
+              </div>
+            </div>
             {
               chatList.map(group => (
                 <ChatGroup key={group.id} group={group} setSelectedGroup={setSelectedGroup} />
@@ -78,8 +96,14 @@ function MainPage() {
             ? (
               <>
                 <div className="main-group-wrapper">
+                  <div className="exit-group-wrapper">
+                    <CloseOutlined className="exit-group"/>
+                  </div>
                   <div className="main-group-name">
                     {selectedGroup.name}
+                  </div>
+                  <div className="add-person-wrapper">
+                    <UserAddOutlined className="add-person"/>
                   </div>
                 </div>
                 <ChatBox groupId={selectedGroup.id} unselectGroup={() => setSelectedGroup(null)} />

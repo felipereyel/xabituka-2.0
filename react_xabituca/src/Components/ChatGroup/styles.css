@@ -53,7 +53,7 @@
     color:  rgba(0,0,0,0.8);
 }
 .chat-group-last-message {
-    font-size: 18px;
+    font-size: 13px;
     color:  rgba(0,0,0,0.8);
     word-wrap: break-word;
     text-overflow: ellipsis;
