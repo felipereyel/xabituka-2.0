@@ -35,10 +35,11 @@
     margin-right: 10px;
     border-radius: 25px;
     background-color: #78e08f;
-    padding: 16px;
+    padding: 8px 12px;
     position: relative;
     text-align: left;
     color: #000000;
+    min-width: 100px;
 }
 
 .other-message-content {
@@ -47,7 +48,7 @@
     margin-left: 10px;
     border-radius: 25px;
     background-color: #82ccdd;
-    padding: 16px;
+    padding: 8px 16px;
     position: relative;
     color: #000000;
 }

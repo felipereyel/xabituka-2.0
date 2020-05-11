@@ -41,6 +41,48 @@
     color: #FFFFFF;
     box-shadow: 0 1px 3px rgba(255,255,255,0.12), 0 1px 2px rgba(255,255,255,0.24);
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-bottom: 15px;
+}
+
+.new-group {
+    display: flex;
+    text-align: left;
+    height: 100px;
+    width: 95%;
+    padding: 8px;
+    box-sizing: border-box;
+    /* background-color: rgba(255, 255, 255); */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 10px;
+    margin-top: 15px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    -webkit-touch-callout: none;
+   -webkit-user-select: none;
+   -khtml-user-select: none;
+   -moz-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+   cursor: pointer;
+}
+
+.new-group:hover {
+    transform: scale(1.06);
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.new-group-img-wrapper {
+    height: 58px;
+    width: 58px;
+    box-sizing: border-box;
+    padding: 8px;
+}
+
+.new-group-img {
+    font-size: 50px;
 }
 
 .main-chat-list-wrapper {
@@ -58,7 +100,6 @@
     border-radius: 10px;
     font-family: Helvetica, sans-serif;
     font-size: 40px;
-    background-color: #C5C5C5;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -69,13 +110,42 @@
 
 .main-group-wrapper {
     width: 100%;
-    height: 91px;
+    height: 66px;
     box-sizing: border-box;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
 }
+
+.exit-group-wrapper {
+    width: 66px;
+    height: 66px; 
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.add-person-wrapper {
+    width: 66px;
+    height: 66px; 
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.add-person {
+    font-size: 40px; 
+}
+
+.exit-group {
+    font-size: 40px;
+}
+	
 
 .main-input-message {
     width: 80%;

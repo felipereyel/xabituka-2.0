@@ -13,50 +13,63 @@ function ChatBox({ groupId, unselectGroup }) {
   const [messageList, setMessageList] = useState([]);
   const [message, setMessage] = useState('')
   const history = useHistory()
+  const [intervalVariable, setIntervalVarible] = useState(null)
 
   const username = localStorage.getItem('nickname')
 
-  useEffect(() => {
-    async function fetchMessageList() {
-      try {
-        const res = await api.get(`/messages/${groupId}`, {
-          headers: {
-            Authorization: localStorage.getItem('token')
-          }
-        })
-        const data = await res.data
-        console.log(data);
-
-        if (data.success) {
-          setMessageList(data.messages)
+  async function fetchMessageList() {
+    try {
+      const groupIdBackup = new Number(groupId)
+      const res = await api.get(`/messages/${groupId}`, {
+        headers: {
+          Authorization: localStorage.getItem('token')
         }
-        else {
-          const args = {
-            message: 'Erro',
-            description: 'Erro ao carregar mensagens. Por favor, faça o login novamente.',
-          }
+      })
+      const data = await res.data
+      // console.log(data);
 
-          notification.open(args)
-          history.push('/login')
-          localStorage.clear()
+      if (data.success) {
+        if (groupId == groupIdBackup) {
+          console.log('att', groupId)
+          await setMessageList(data.messages)
         }
       }
-      catch (err) {
+      else {
         const args = {
           message: 'Erro',
-          description: 'Erro no servidor. Tente novamente mais tarde',
+          description: 'Erro ao carregar mensagens. Por favor, faça o login novamente.',
         }
 
         notification.open(args)
+        history.push('/login')
+        localStorage.clear()
       }
     }
+    catch (err) {
+      const args = {
+        message: 'Erro',
+        description: 'Erro no servidor. Tente novamente mais tarde',
+      }
 
-    fetchMessageList()
+      notification.open(args)
+    }
+  }
+
+  useEffect(() => {
+    async function setMessagePooling() {
+      await clearInterval(intervalVariable)
+      const reference = await setInterval(() => {
+        fetchMessageList()
+      }, 1000)
+      await setIntervalVarible(reference)
+    }
+
+    setMessagePooling()
   }, [groupId]);
 
   async function sendMessage(event) {
     event.preventDefault()
-    setMessage('')
+    await setMessage('')
 
     try {
       const res = await api.post(`/messages/${groupId}`,
@@ -70,11 +83,10 @@ function ChatBox({ groupId, unselectGroup }) {
           }
         }
       )
-      const data = res.data
+      const data = await res.data
       console.log(data)
-      setMessageList(data.message)
+      await setMessageList(data.messages)
     }
-
     catch (err) {
       console.log(err)
 
@@ -98,7 +110,7 @@ function ChatBox({ groupId, unselectGroup }) {
       </div>
       <form
         className="main-input-wrapper"
-        onSubmit={sendMessage}
+        onSubmit={(event) => { message.length > 0 && sendMessage(event) }}
       >
         <img
           onClick={unselectGroup}
@@ -108,14 +120,16 @@ function ChatBox({ groupId, unselectGroup }) {
         />
         <input
           className="main-input-message"
-          defaultValue={message}
-          onChange={(event) => console.log(message) || setMessage(event.target.value)}
+          type="text"
+          placeholder="Digite uma mensagem"
+          value={message}
+          onInput={(event) => setMessage(event.target.value)}
         />
         <img
           className="main-send-button"
           src={send}
           alt="Enviar"
-          onClick={sendMessage}
+          onClick={(event) => { message.length > 0 && sendMessage(event) }}
         />
       </form>
     </>

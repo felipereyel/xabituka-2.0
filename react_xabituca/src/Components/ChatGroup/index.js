@@ -1,9 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './styles.css'
 import logo from '../../Assets/logo.png'
 
 function ChatGroup({ group, setSelectedGroup }) {
-    const { photo, name, lastMessage } = group
+
+    const { photo, name, lastMessage: lastMessageAsArray } = group
+    let lastMessage = {
+        userGroup: {
+            user: {
+                nickname: ""
+            }
+        },
+        content: "Nenhuma mensagem enviada."
+    }
+
+    if (lastMessageAsArray.length > 0) {
+        lastMessage = lastMessageAsArray[0]
+    }
 
     return (
         <div className="chat-group-box" onClick={() => setSelectedGroup(group)}>

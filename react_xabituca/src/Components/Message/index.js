@@ -2,7 +2,7 @@ import React from 'react';
 import './styles.css'
 
 function Message({ message, username }) {
-    console.log(message)
+    // console.log(message)
     const { content, userGroup } = message
     const { user: messageUser } = userGroup
 
