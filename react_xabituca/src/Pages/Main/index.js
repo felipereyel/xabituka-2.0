@@ -151,8 +151,6 @@ function MainPage() {
   }
 
   async function handleLeaveGroup() {
-    setSelectedGroup(null)
-    setLeavingGroup(false)
     try {
       const token = await localStorage.getItem('token')
       const userId = await localStorage.getItem('userId')
@@ -164,7 +162,7 @@ function MainPage() {
       const data = await res.data
 
       if (data.success === true) {
-        fetchChatList()
+        await fetchChatList()
         const args = {
           message: 'Sucesso',
           description: `Você saiu do grupo ${selectedGroup.name}`,
@@ -193,6 +191,8 @@ function MainPage() {
 
       notification.open(args)
     }
+    await setLeavingGroup(false)
+    await setSelectedGroup(null)
   }
 
   async function handleCreateGroup() {
@@ -428,7 +428,6 @@ function MainPage() {
                     />
                   </div>
                 </div>
-                <ChatBox groupId={selectedGroup.id} unselectGroup={() => setSelectedGroup(null)} />
               </>
             )
             : (
@@ -441,6 +440,7 @@ function MainPage() {
               </>
             )
           }
+          <ChatBox group={selectedGroup} unselectGroup={() => setSelectedGroup(null)} />
         </div>
       </div>
     </div>
