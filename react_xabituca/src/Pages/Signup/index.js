@@ -26,7 +26,7 @@ function SignupPage() {
 
       console.log(data)
 
-      if (data.created === true) {
+      if (data.success === true) {
         const args = {
           message: 'Sucesso',
           description: 'Usuário criado com sucesso. Tente fazer o login para começar a usar o aplicativo =)',
