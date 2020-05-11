@@ -15,6 +15,7 @@ function MainPage() {
   const [chatList, setChatList] = useState([]);
   const [newUser, setNewUser] = useState({ isAdding: false, data: {} })
   const [allUsers, setAllUsers] = useState({ list: [], loading: true })
+  const [leavingGroup, setLeavingGroup] = useState(false)
 
   useEffect(() => {
     async function loadAllUsers() {
@@ -54,48 +55,48 @@ function MainPage() {
   const history = useHistory()
 
   useEffect(() => {
-    async function fetchChatList() {
-      try {
+    fetchChatList()
+  }, []);
 
-        const res = await api.get("/groups", {
-          headers: {
-            Authorization: localStorage.getItem('token')
-          }
-        })
-        const data = res.data
-        console.log(data)
+  async function fetchChatList() {
+    try {
 
-        if (data.success === true) {
-          setChatList(data.groups)
+      const res = await api.get("/groups", {
+        headers: {
+          Authorization: localStorage.getItem('token')
         }
+      })
+      const data = res.data
+      console.log(data)
 
-        else {
-          const args = {
-            message: 'Erro',
-            description: 'Erro ao carregar grupos. Por favor, faça o login novamente.',
-          }
-
-          notification.open(args)
-          history.push('/login')
-          localStorage.clear()
-        }
-
-        // setChatList(data)
+      if (data.success === true) {
+        setChatList(data.groups)
       }
-      catch (err) {
-        console.log(err)
 
+      else {
         const args = {
           message: 'Erro',
-          description: 'Erro no servidor.',
+          description: 'Erro ao carregar grupos. Por favor, faça o login novamente.',
         }
 
         notification.open(args)
+        history.push('/login')
+        localStorage.clear()
       }
-    }
 
-    fetchChatList()
-  }, []);
+      // setChatList(data)
+    }
+    catch (err) {
+      console.log(err)
+
+      const args = {
+        message: 'Erro',
+        description: 'Erro no servidor.',
+      }
+
+      notification.open(args)
+    }
+  }
 
   async function handleAddPersonToGroup() {
     console.log({
@@ -119,6 +120,7 @@ function MainPage() {
         }
 
         notification.open(args)
+        setNewUser({ isAdding: false, data: {} })
       }
       else {
         console.log(data.reason)
@@ -137,6 +139,51 @@ function MainPage() {
       const args = {
         message: 'Erro',
         description: `Usuário (${newUser.data.nickname}) não foi adicionado.`,
+      }
+
+      notification.open(args)
+    }
+  }
+
+  async function handleLeaveGroup() {
+    setSelectedGroup(null)
+    setLeavingGroup(false)
+    try {
+      const token = await localStorage.getItem('token')
+      const userId = await localStorage.getItem('userId')
+      const res = await api.get(`/membership/${selectedGroup.id}/remove/${userId}`, {
+        headers: {
+          Authorization: token
+        }
+      })
+      const data = await res.data
+
+      if (data.success === true) {
+        fetchChatList()
+        const args = {
+          message: 'Sucesso',
+          description: `Você saiu do grupo ${selectedGroup.name}`,
+        }
+
+        notification.open(args)
+      }
+      else {
+        console.log(data.reason)
+
+        const args = {
+          message: 'Erro',
+          description: `Erro ao sair do grupo`,
+        }
+
+        notification.open(args)
+      }
+    }
+    catch (err) {
+      console.log(err)
+
+      const args = {
+        message: 'Erro',
+        description: `Erro ao sair do grupo`,
       }
 
       notification.open(args)
@@ -175,6 +222,18 @@ function MainPage() {
         />
       </Modal>
 
+      <Modal
+        title="Sair do grupo"
+        visible={leavingGroup}
+        onCancel={() => setLeavingGroup(false)}
+        footer={[
+          <Button key="confirm" onClick={() => handleLeaveGroup()}>
+            Sair
+          </Button>,
+        ]}
+      >
+        Tem certeza que deseja sair deste grupo?
+      </Modal>
       <div className="white-box-main">
         <div className="main-chat-list-wrapper">
           <div className="main-chat-list">
@@ -204,7 +263,10 @@ function MainPage() {
               <>
                 <div className="main-group-wrapper">
                   <div className="exit-group-wrapper">
-                    <CloseOutlined className="exit-group" />
+                    <CloseOutlined
+                      className="exit-group"
+                      onClick={() => setLeavingGroup(true)}
+                    />
                   </div>
                   <div className="main-group-name">
                     {selectedGroup.name}
