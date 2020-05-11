@@ -12,5 +12,5 @@ import java.util.List;
 
 @Repository
 public interface MessagesRepository extends JpaRepository<Messages, Long> {
-    List<Messages> findAllByUserGroupInOrderByCreatedAt(List<User_Group> user_group_ist);
+    List<Messages> findAllByUserGroupInOrderByCreatedAtDesc(List<User_Group> user_group_ist);
 }
