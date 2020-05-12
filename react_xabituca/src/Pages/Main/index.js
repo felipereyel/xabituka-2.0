@@ -340,7 +340,7 @@ function MainPage() {
       </Modal>
 
       <Modal
-        title="Adicionar usuário ao grupo"
+        title="Criar um novo Grupo"
         visible={creatingNewGroup}
         onCancel={() => setCreatingNewGroup(false)}
         width='80%'
