@@ -1,7 +1,5 @@
 package com.example.xabituca;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,7 +14,7 @@ public class SignupActivity extends Activity {
     }
 
     public void redirectToMainActivity(View view) {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, GroupsActivity.class);
         startActivity(intent);
     }
     public void redirectToLoginActivity(View view) {
