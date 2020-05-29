@@ -17,7 +17,6 @@ public class GroupAdapter extends ArrayAdapter<Group> {
 
     public GroupAdapter(Activity context, int layoutItem, ArrayList<Group> groups) {
         super(context, layoutItem, groups);
-
         this.context = context;
         this.groups = groups;
     }
