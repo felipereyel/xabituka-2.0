@@ -15,23 +15,23 @@ public class GroupAdapter extends ArrayAdapter<Group> {
     private final Activity context;
     private final ArrayList<Group> groups;
 
-    public GroupAdapter(Activity context, int layoutItem, ArrayList<Group> groups) {
-        super(context, layoutItem, groups);
+    public GroupAdapter(Activity context, ArrayList<Group> groups) {
+        super(context, 0, groups);
         this.context = context;
         this.groups = groups;
     }
 
-//    public View getView(int position, View view, ViewGroup parent) {
-//        LayoutInflater inflater = context.getLayoutInflater();
-//        View rowView = inflater.inflate(R.layout.group_layout, null,true);
-//        TextView titleText = (TextView) rowView.findViewById(R.id.title);
-//        ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
-//        TextView subtitleText = (TextView) rowView.findViewById(R.id.subtitle);
-////        titleText.setText(groups.get(position).nome);
+    public View getView(int position, View view, ViewGroup parent) {
+        LayoutInflater inflater = context.getLayoutInflater();
+        View rowView = inflater.inflate(R.layout.group_layout, null,true);
+
+        TextView titleView = (TextView) rowView.findViewById(R.id.group_name);
+        ImageView imageView = (ImageView) rowView.findViewById(R.id.group_icon);
+        TextView subtitleText = (TextView) rowView.findViewById(R.id.group_description);
+
+        titleView.setText(groups.get(position).name);
 //        imageView.setImageResource(R.mipmap.ic_launcher_round);
-////        subtitleText.setText(groups.get(position).texto);
-//        return rowView;
-//    };
-
-
+        subtitleText.setText(groups.get(position).description);
+        return rowView;
+    };
 }
