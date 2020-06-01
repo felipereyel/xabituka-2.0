@@ -83,6 +83,7 @@ public class UsersController {
         repository.save(user);
         res.put("success", true);
         res.put("user", user);
+        res.put("token", user.getToken());
         return (LinkedHashMap) res;
     }
 
