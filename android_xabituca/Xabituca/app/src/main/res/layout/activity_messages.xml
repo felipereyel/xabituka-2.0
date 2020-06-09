@@ -4,9 +4,41 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#3E3D3B"
-    >
-
+    android:background="@color/message_activity_background_color">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:background="#3E3D3B">
+        <ImageView
+            android:id="@+id/group_icon"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:padding="5dp"
+            android:src="@drawable/unicorn_icon"/>
+        <LinearLayout android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/message_activity_group_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:padding="2dp"
+                android:text="Nome do Grupo"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#FFFFE0"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/message_activity_group_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Descrição do grupo"
+                android:textColor="#FFFFE0"
+                android:layout_marginLeft="10dp" />
+        </LinearLayout>
+    </LinearLayout>
     <ListView
         android:id="@+id/message_list_view"
         android:layout_width="match_parent"

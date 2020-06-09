@@ -58,6 +58,7 @@ public class LoginActivity extends Activity {
                                 sharedPreferences = getSharedPreferences("token", Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString("token", token);
+                                editor.putString("username", response.getJSONObject("user").getString("nickname"));
                                 editor.apply();
                                 redirectToMainActivity();
                             }else{
