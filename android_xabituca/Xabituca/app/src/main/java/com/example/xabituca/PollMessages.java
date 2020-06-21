@@ -14,6 +14,6 @@ public class PollMessages extends Thread {
             public void run(){
                 activity.fetchAllMessages(activity.group_id);
             }
-        },0,2000);
+        },500,5000);
     }
 }

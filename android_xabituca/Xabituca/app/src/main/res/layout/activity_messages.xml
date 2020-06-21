@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="right"
     android:background="@color/message_activity_background_color">
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -24,10 +25,13 @@
             android:src="@drawable/unicorn_icon"/>
         <LinearLayout
             android:layout_width="wrap_content"
+            android:layout_weight="1"
             android:layout_height="match_parent"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/message_activity_group_name"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -39,6 +43,8 @@
                 android:textStyle="bold"/>
             <TextView
                 android:id="@+id/message_activity_group_description"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Descrição do grupo"
@@ -47,7 +53,7 @@
         </LinearLayout>
         <LinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="60dp"
             android:gravity="center_vertical"
             android:padding="10dp"
@@ -55,7 +61,7 @@
             android:background="#3E3D3B">
             <LinearLayout
                 xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="right"
                 android:orientation="horizontal"
