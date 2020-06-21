@@ -85,6 +85,57 @@ public class MembershipController {
         return (LinkedHashMap) res;
     }
 
+    @GetMapping(path = {"/{groupId}/add"})
+    public LinkedHashMap addByNickname(
+            @RequestHeader("Authorization") String token,
+            @PathVariable Long groupId,
+            @RequestParam String nickname,
+            @RequestParam(defaultValue = "false") boolean admin
+    ) {
+        Map res = new LinkedHashMap();
+
+        Optional<Users> optSelfUser = usersRepository.findByToken(token);
+        if(optSelfUser.isEmpty()){
+            res.put("success", false);
+            res.put("reason", "Invalid token");
+            return (LinkedHashMap) res;
+        }
+        Users selfUser = optSelfUser.get();
+
+        Optional<User_Group> optMembership = repository.findFirstByUserIdAndGroupIdOrderByJoinedAt(selfUser.getId(), groupId);
+        if(optMembership.isEmpty()){
+            res.put("success", false);
+            res.put("reason", "Invalid membership");
+            return (LinkedHashMap) res;
+        }
+        User_Group selfMembership = optMembership.get();
+
+        if((selfMembership.getExitedAt() != null) || (!selfMembership.isAdmin())){
+            res.put("success", false);
+            res.put("reason", "Invalid membership");
+            return (LinkedHashMap) res;
+        }
+
+        Optional<Groups> optGroup = groupsRepository.findById(groupId);
+        Groups group = optGroup.get();
+
+        Optional<Users> optUser = usersRepository.findByNickname(nickname);
+        if(!optUser.isPresent()){
+            res.put("success", false);
+            res.put("reason", "Invalid user");
+            return (LinkedHashMap) res;
+        }
+        Users user = optUser.get();
+
+
+        User_Group membership = new User_Group(user, group, admin);
+        repository.save(membership);
+
+        res.put("success", true);
+        res.put("membership", membership);
+        return (LinkedHashMap) res;
+    }
+
     @GetMapping(path = {"/{groupId}/remove/{userId}"})
     public LinkedHashMap remove(
             @RequestHeader("Authorization") String token,
