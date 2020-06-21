@@ -1,5 +1,6 @@
 package com.example.xabituca.models;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class User
@@ -16,8 +17,13 @@ public class User
         this.createdAt = createdAt;
     }
 
-    public static User fromJson(JSONObject json) {
-        return User.getDummy();
+    public static User fromJSON(JSONObject json) throws JSONException {
+        int _id = json.getInt("id");
+        String _nickname = json.getString("nickname");
+        String _fullname = json.getString("fullName");
+        long _createdAt = json.getLong("createdAt");
+        User userFromJson = new User(_id, _nickname, _fullname, _createdAt);
+        return userFromJson;
     }
 
     public static User getDummy() {

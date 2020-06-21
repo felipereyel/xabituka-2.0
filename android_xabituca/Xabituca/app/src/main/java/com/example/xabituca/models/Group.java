@@ -38,16 +38,11 @@ public class Group
             Log.e("_name", _name);
             String _description = json.getString("description");
 //            this.createdAt = createdAt;
-
             JSONObject ownerJson = json.getJSONObject("owner");
-            User _owner = User.fromJson(ownerJson);
-
-
+            User _owner = User.fromJSON(ownerJson);
             JSONArray _lastMessageJson = json.getJSONArray("lastMessage");
-            Message _lastMessage = Message.fromJson(_lastMessageJson.getJSONObject(0));
-
+            Message _lastMessage = Message.fromJSON(_lastMessageJson.getJSONObject(0));
             Group groupFromJson = new Group(_id, _name, _owner, _description, _lastMessage);
-
             return groupFromJson;
         }
         catch(Exception e) {

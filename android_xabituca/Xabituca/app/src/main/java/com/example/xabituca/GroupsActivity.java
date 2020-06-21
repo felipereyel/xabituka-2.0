@@ -1,5 +1,4 @@
 package com.example.xabituca;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,12 +7,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -22,10 +18,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.xabituca.models.Group;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,35 +28,28 @@ public class GroupsActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     RequestQueue requestQueue;
     String token;
-
     private ListView groupListView;
     private GroupAdapter groupAdapter;
     private ArrayList<Group> groups;
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_groups);
-
         groups = new ArrayList<Group>();
-
         requestQueue = Volley.newRequestQueue(this);
         fetchAllGroups();
-
         groupListView = findViewById(R.id.group_list_view);
-
         groupListView.setDivider(null);
         groupListView.setDividerHeight(0);
-
         groupAdapter = new GroupAdapter(this, groups);
         groupListView.setAdapter(groupAdapter);
-
-//        Button quit_login = findViewById(R.id.button);
-//        quit_login.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                quit();
-//                redirectToLoginActivity();
-//            }
-//        });
+        groupListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Toast.makeText(getApplicationContext(),"Clicou no item " + position + "id " + id, Toast.LENGTH_LONG).show();
+                Group group = groups.get(position);
+                redirectToMessagesActivity(group);
+            }
+        });
     }
 
     // create an action bar button
@@ -77,7 +64,6 @@ public class GroupsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         if (id == R.id.group_menu_logout) {
             this.quit();
             this.redirectToLoginActivity();
@@ -108,12 +94,10 @@ public class GroupsActivity extends AppCompatActivity {
                             boolean success = response.getBoolean("success");
                             if (success) {
                                 JSONArray groupsJSONArray = response.getJSONArray("groups");
-
                                 int numberOfGroups = groupsJSONArray.length();
                                 for (int i = 0; i < numberOfGroups; i++) {
                                     JSONObject groupJson = groupsJSONArray.getJSONObject(i);
                                     Group newGroup = Group.fromJSON(groupJson);
-
                                     groups.add(newGroup);
                                 }
                                 groupAdapter.notifyDataSetChanged();
@@ -140,42 +124,21 @@ public class GroupsActivity extends AppCompatActivity {
                 token = sharedPreferences.getString("token", "");
                 Map<String, String>  params = new HashMap<String, String>();
                 params.put("Authorization", token);
-
                 return params;
             }
         };
         requestQueue.add(request);
     }
-//
-//    public void login_autentication (final String login, String password){
-//        String url = "http://35.225.88.246:8080/users/login?nickname="+login+"&psswd="+password;
-//        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
-//                new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        try{
-//                            if(response.getBoolean("success")){
-//                                JSONObject user = response.getJSONObject("user");
-//                                Toast.makeText(LoginActivity.this, "Ola "+user.getString("fullName")+", agora voce esta logado!", Toast.LENGTH_LONG).show();
-//                                token = response.getString("token");
-//                                sharedPreferences = getSharedPreferences("token", Context.MODE_PRIVATE);
-//                                SharedPreferences.Editor editor = sharedPreferences.edit();
-//                                editor.putString("token", token);
-//                                editor.apply();
-//                                redirectToMainActivity();
-//                            }else{
-//                                Toast.makeText(LoginActivity.this, "Credenciais erradas!", Toast.LENGTH_SHORT).show();
-//                            }
-//                        }catch (Exception e){
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//            }
-//        });
-//        login_queue.add(request);
-//    }
 
+    public void redirectToMessagesActivity(Group group) {
+        Intent intentMessageActivity = new Intent(getApplicationContext(), MessagesActivity.class);
+//        Bundle params = new Bundle();
+//        int id_group = (int) id;
+//        params.putInt("id_group", id_group);
+        intentMessageActivity.putExtra("group_id", Integer.toString(group.id));
+        intentMessageActivity.putExtra("group_name", group.name);
+        intentMessageActivity.putExtra("group_description", group.description);
+//        Intent intent = new Intent(this, MessagesActivity.class);
+        startActivity(intentMessageActivity);
+    }
 }
