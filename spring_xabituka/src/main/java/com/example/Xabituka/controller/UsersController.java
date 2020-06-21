@@ -67,7 +67,7 @@ public class UsersController {
         String full_name = (String) body.get("full_name");
         String psswd = (String) body.get("psswd");
 
-        Optional<Users> existingUser = Optional.ofNullable(repository.findByNickname(nickname));
+        Optional<Users> existingUser = repository.findByNickname(nickname);
         if (existingUser.isPresent()) {
             res.put("success", false);
             res.put("reason", "Already user with nickname");
@@ -91,7 +91,7 @@ public class UsersController {
     public LinkedHashMap login(@RequestParam String nickname, @RequestParam String psswd) {
         Map res = new LinkedHashMap();
 
-        Optional<Users> optUser = Optional.ofNullable(repository.findByNickname(nickname));
+        Optional<Users> optUser = repository.findByNickname(nickname);
         if (optUser.isEmpty()) {
             res.put("success", false);
             res.put("reason", "Wrong data");
