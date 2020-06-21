@@ -1,13 +1,17 @@
 package com.example.xabituca;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.AuthFailureError;
@@ -36,7 +40,6 @@ public class GroupsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_groups);
         groups = new ArrayList<Group>();
         requestQueue = Volley.newRequestQueue(this);
-        fetchAllGroups();
         groupListView = findViewById(R.id.group_list_view);
         groupListView.setDivider(null);
         groupListView.setDividerHeight(0);
@@ -51,8 +54,10 @@ public class GroupsActivity extends AppCompatActivity {
             }
         });
     }
-
-    // create an action bar button
+    public void onResume () {
+        super.onResume();
+        fetchAllGroups();
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // R.menu.mymenu is a reference to an xml file named mymenu.xml which should be inside your res/menu directory.
@@ -68,6 +73,9 @@ public class GroupsActivity extends AppCompatActivity {
             this.quit();
             this.redirectToLoginActivity();
             return true;
+        }else if(id == R.id.new_group){
+            this.createNewGroup();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -77,6 +85,12 @@ public class GroupsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void createNewGroup(){
+        Log.e("aaa", "entrou na funcao");
+        NewGroupDialog dialog = new NewGroupDialog();
+        dialog.showDialog(this, this);
+    }
+
     public void quit() {
         sharedPreferences = getSharedPreferences("token", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -84,7 +98,8 @@ public class GroupsActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    private void fetchAllGroups() {
+    public void fetchAllGroups() {
+        groups.clear();
         String url = "http://35.225.88.246:8080/groups";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {

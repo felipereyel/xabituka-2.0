@@ -21,14 +21,14 @@ public class Group
     public String description;
     public Message lastMessage;
 
-    public Group(int id, String name, User owner, String description, Message lastMessage) {
+    public Group(int id, String name, User owner, String description) {
         this.id = id;
         this.name = name;
 //        this.photo = photo;
         this.owner = owner;
 //        this.createdAt = createdAt;
         this.description = description;
-        this.lastMessage = lastMessage;
+//        this.lastMessage = lastMessage;
     }
 
     public static Group fromJSON(JSONObject json) {
@@ -40,9 +40,9 @@ public class Group
 //            this.createdAt = createdAt;
             JSONObject ownerJson = json.getJSONObject("owner");
             User _owner = User.fromJSON(ownerJson);
-            JSONArray _lastMessageJson = json.getJSONArray("lastMessage");
-            Message _lastMessage = Message.fromJSON(_lastMessageJson.getJSONObject(0));
-            Group groupFromJson = new Group(_id, _name, _owner, _description, _lastMessage);
+//            JSONArray _lastMessageJson = json.getJSONArray("lastMessage");
+//            Message _lastMessage = Message.fromJSON(_lastMessageJson.getJSONObject(0));
+            Group groupFromJson = new Group(_id, _name, _owner, _description);
             return groupFromJson;
         }
         catch(Exception e) {
@@ -57,10 +57,9 @@ public class Group
             1,
             "dummy group",
             User.getDummy(),
-            "dummy description",
-            Message.getDummy()
+            "dummy description"
+//            Message.getDummy()
         );
-
         return dummyGroup;
     }
 }

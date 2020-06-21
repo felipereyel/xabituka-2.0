@@ -33,8 +33,8 @@ public class LoginActivity extends Activity {
             redirectToMainActivity();
         }else{
             Button botao = findViewById(R.id.login_button);
-            login_attempt = (EditText ) findViewById(R.id.login_username);
-            password_attempt = (EditText ) findViewById(R.id.login_password);
+            login_attempt = (EditText) findViewById(R.id.login_username);
+            password_attempt = (EditText) findViewById(R.id.login_password);
             login_queue = Volley.newRequestQueue(this);
             botao.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
@@ -59,6 +59,7 @@ public class LoginActivity extends Activity {
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString("token", token);
                                 editor.putString("username", response.getJSONObject("user").getString("nickname"));
+                                editor.putString("user_id", response.getJSONObject("user").getString("id"));
                                 editor.apply();
                                 redirectToMainActivity();
                             }else{

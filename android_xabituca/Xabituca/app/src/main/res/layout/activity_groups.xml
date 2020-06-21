@@ -6,7 +6,6 @@
     android:orientation="vertical"
     android:background="#3E3D3B"
     >
-
     <ListView
         android:id="@+id/group_list_view"
         android:layout_width="match_parent"
@@ -15,5 +14,4 @@
         android:footerDividersEnabled="false"
         android:headerDividersEnabled="false"
         android:dividerHeight="0dp" />
-
 </LinearLayout>

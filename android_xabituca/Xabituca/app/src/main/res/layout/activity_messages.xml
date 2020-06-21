@@ -1,22 +1,29 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/message_activity_background_color">
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
         android:background="#3E3D3B">
+        <ImageButton
+            android:id="@+id/back"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@drawable/ic_back"/>
         <ImageView
             android:id="@+id/group_icon"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:padding="5dp"
             android:src="@drawable/unicorn_icon"/>
-        <LinearLayout android:layout_width="fill_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical">
             <TextView
@@ -29,23 +36,89 @@
                 android:text="Nome do Grupo"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#FFFFE0"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
             <TextView
                 android:id="@+id/message_activity_group_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Descrição do grupo"
                 android:textColor="#FFFFE0"
-                android:layout_marginLeft="10dp" />
+                android:layout_marginLeft="10dp"/>
+        </LinearLayout>
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:orientation="horizontal"
+            android:background="#3E3D3B">
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:background="#3E3D3B">
+                <ImageView
+                    android:id="@+id/add_person"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/ic_add"/>
+                <ImageView
+                    android:id="@+id/exit_group"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_logout"/>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
     <ListView
         android:id="@+id/message_list_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:dividerHeight="0dp"
         android:layout_weight="1"
         android:footerDividersEnabled="false"
-        android:headerDividersEnabled="false"
-        android:dividerHeight="0dp" />
-
+        android:headerDividersEnabled="false"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginBottom="3dp"
+            android:layout_weight="1"
+            android:paddingLeft="14dp"
+            android:paddingRight="14dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:background="@drawable/rounded_box"
+            android:elevation="2dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            <EditText
+                android:id="@+id/text_send_message"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:ems="12"
+                android:inputType="textPersonName"/>
+        </LinearLayout>
+        <ImageButton
+            android:id="@+id/button_send_message"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@drawable/send"/>
+    </LinearLayout>
 </LinearLayout>
